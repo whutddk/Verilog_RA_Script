@@ -30,9 +30,9 @@ def write_verilog():
 		# 	strData = strData +'\n'
 		# 	verilogFile.write(strData)
 		# 	#print strSyntax
-		strSyntax = 'lookUpTrueTable[1048577] = {'
+		strSyntax = 'uint32_t lookUpTrueTable[523288] = {\n'
 		CFile.write(strSyntax)
-		for i in range(0,32768):	#all case all pix			
+		for i in range(0,16384):	#all case all pix			
 			for j in range(0,32): # all edge
 				result = ''
 				for k in range(0,32):
