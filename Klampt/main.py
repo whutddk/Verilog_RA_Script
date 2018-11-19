@@ -15,7 +15,7 @@ edgeIndex = []
 
 trueTable = []
 
-def make_testing_mesh(world):
+def make_testing_mesh_old(world):
 	"""automatically create a mesh test grid
 	"""
 
@@ -33,6 +33,35 @@ def make_testing_mesh(world):
 				Mesh.geometry().set(grid)
 				Mesh.appearance().setColor(0.3,0.1,0.1,0.1)
 	return 
+
+
+def make_testing_mesh_new(world):
+	"""automatically create a mesh test grid
+	"""
+	a = 0
+	r = 0
+	z = 0
+	for z in range(0,32):
+		for a in range (0,64):
+			for r in range (0,16):
+				grid = Geometry3D()
+
+				grid.loadFile("terrains/trapezoid/trapezoid" + str(a) + "_"+ str(r) +".off")
+				#grid.loadFile("terrains/trapezoid/cube.off")
+
+				grid.transform([1,0,0,0,1,0,0,0,1],[0,0,0.032*z])			
+
+				Mesh = world.makeTerrain("Grid," + "%3d"%a + "," + "%3d"%r + "," + "%3d"%z)
+
+				Mesh.geometry().set(grid)
+				if ( (z+a+r)%3 == 0 ):
+					Mesh.appearance().setColor(0.5,0.1,0.1,0.3)
+				elif ( (z+a+r)%3 == 1 ):
+					Mesh.appearance().setColor(0.1,0.5,0.1,0.3)
+				else:
+					Mesh.appearance().setColor(0.1,0.1,0.5,0.3)
+	return 
+
 
 def load_Pose():
 	global Pose
@@ -87,7 +116,6 @@ def create_Edge(Index):
 
 	print "now Create Edge:"
 	print Index
-	print edgeIndex[Index]
 
 	i = edgeIndex[Index][0]
 	j = edgeIndex[Index][1]
@@ -113,7 +141,7 @@ def create_Edge(Index):
 	fingerDis = ( fingerEnd - fingerStart ) / 100
 	toolDis = ( toolEnd - toolStart ) / 100
 
-	oneEdge = [0 for m in xrange(0,16384)]
+	oneEdge = [0 for m in xrange(0,32768)]
 
 	for k in range (0,101):
 		time.sleep(0.01)
@@ -125,10 +153,10 @@ def create_Edge(Index):
 			result = q.getName()
 			
 			#print q.getName()
-			x = int(result[5:8])
-			y = int(result [9:12])
+			a = int(result[5:8])
+			r = int(result [9:12])
 			z = int(result[13:16])
-			oneEdge[1024*x+32*y+z] = 1
+			oneEdge[1024*z+64*r+a] = 1
 			cnt = cnt + 1;
 		print "cnt in this frame"
 		print cnt
@@ -148,7 +176,8 @@ if __name__ == "__main__":
 	load_Index()
 	load_edge()
 
-	make_testing_mesh(world)
+	#make_testing_mesh_old(world)
+	make_testing_mesh_new(world)
 				
 	#vis.add("world",world)
 	#sim = Simulator(world)
@@ -159,7 +188,7 @@ if __name__ == "__main__":
 	robotPose = RobotPoser(robot)
 	
 	#print robotPose.get()
-	while(len(edge) < 1034):
+	while(len(edge) < 1024):
 		create_Edge(len(edge))
 
 
