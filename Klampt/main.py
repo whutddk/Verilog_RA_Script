@@ -42,7 +42,7 @@ def make_testing_mesh_new(world):
 	r = 0
 	z = 0
 	for z in range(0,32):
-		for a in range (0,64):
+		for a in range (0,32):
 			for r in range (0,16):
 				grid = Geometry3D()
 
@@ -54,12 +54,9 @@ def make_testing_mesh_new(world):
 				Mesh = world.makeTerrain("Grid," + "%3d"%a + "," + "%3d"%r + "," + "%3d"%z)
 
 				Mesh.geometry().set(grid)
-				if ( (z+a+r)%3 == 0 ):
-					Mesh.appearance().setColor(0.5,0.1,0.1,0.3)
-				elif ( (z+a+r)%3 == 1 ):
-					Mesh.appearance().setColor(0.1,0.5,0.1,0.3)
-				else:
-					Mesh.appearance().setColor(0.1,0.1,0.5,0.3)
+
+				Mesh.appearance().setColor(0.5,0.1,0.1,0.3)
+
 	return 
 
 
@@ -141,7 +138,7 @@ def create_Edge(Index):
 	fingerDis = ( fingerEnd - fingerStart ) / 100
 	toolDis = ( toolEnd - toolStart ) / 100
 
-	oneEdge = [0 for m in xrange(0,32768)]
+	oneEdge = [0 for m in xrange(0,16384)]
 
 	for k in range (0,101):
 		time.sleep(0.01)
@@ -156,7 +153,7 @@ def create_Edge(Index):
 			a = int(result[5:8])
 			r = int(result [9:12])
 			z = int(result[13:16])
-			oneEdge[1024*z+64*r+a] = 1
+			oneEdge[512*a+32*r+z] = 1
 			cnt = cnt + 1;
 		print "cnt in this frame"
 		print cnt
