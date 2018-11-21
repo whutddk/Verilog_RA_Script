@@ -4,46 +4,68 @@ import math
 
 PI = 3.14159
 
-for a in range(0,64):
-	for r in range (0,16):
 
-		with open('./trapezoid'+ str(a)+"_"+ str(r) +'.off','w') as modelFile:
-			radius = 0.16 + 0.022*r
-			angle = 2.8125*a
-			X1 = -radius * math.cos(angle/180*PI) 
-			X2 = -(radius+0.022) * math.cos(angle/180*PI) 
-			X3 = -radius * math.cos((angle+2.8125)/180*PI) 
-			X4 = -(radius+0.022) * math.cos((angle+2.8125)/180*PI) 
+for r in range (0,16):
+	for fi in range (0,32):
+		for thr in range(0,32):
+			with open('./trapezoid'+ str(r)+ '_'+ str(fi) +"_" +str(thr) +'.off','w') as modelFile:
+				radius = 0.132 + 0.031*r
+				theta = 5.625*thr
+				fieta = 4.0625*fi
 
-			Y1 = -radius * math.sin(angle/180*PI) 
-			Y2 = -(radius+0.022) * math.sin((angle)/180*PI) 
-			Y3 = -radius * math.sin((angle+2.8125)/180*PI) 
-			Y4 = -(radius+0.022) * math.sin((angle+2.8125)/180*PI)
+				X1_1 = -radius * math.cos(theta/180*PI) * math.sin(fieta /180*PI)
+				Y1_1 = -radius * math.sin(theta/180*PI) * math.sin(fieta /180*PI)
+				Z1_1 = radius * math.cos(fieta/180*PI)+0.132
+				X1_2 = -radius * math.cos(theta/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Y1_2 = -radius * math.sin(theta/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Z1_2 = radius * math.cos((fieta+4.0625) /180*PI)+0.132
 
-			modelFile.write('OFF\n')
-			modelFile.write('8 12 0\n')
+				X2_1 = -(radius + 0.031) * math.cos(theta/180*PI) * math.sin(fieta /180*PI)
+				Y2_1 = -(radius + 0.031) * math.sin((theta)/180*PI) * math.sin(fieta /180*PI)
+				Z2_1 = (radius+ 0.031) * math.cos(fieta /180*PI)+0.132
+				X2_2 = -(radius + 0.031) * math.cos(theta/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Y2_2 = -(radius + 0.031) * math.sin((theta)/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Z2_2 = (radius+ 0.031) * math.cos((fieta+4.0625) /180*PI)+0.132
 
-			modelFile.write(str(X1) + ' ' +str(Y1)+ ' 0\n')
-			modelFile.write(str(X1) + ' ' +str(Y1)+' 0.032\n')
-			modelFile.write(str(X2) + ' ' +str(Y2)+' 0\n')
-			modelFile.write(str(X2) + ' ' +str(Y2)+' 0.032\n')
-			modelFile.write(str(X3) + ' ' +str(Y3)+' 0\n')
-			modelFile.write(str(X3) + ' ' +str(Y3)+' 0.032\n')
-			modelFile.write(str(X4) + ' ' +str(Y4)+' 0\n')
-			modelFile.write(str(X4) + ' ' +str(Y4)+' 0.032\n')
+				X3_1 = -radius * math.cos((theta+5.625)/180*PI) * math.sin(fieta /180*PI)
+				Y3_1 = -radius * math.sin((theta+5.625)/180*PI) * math.sin(fieta /180*PI)
+				Z3_1 = radius * math.cos(fieta /180*PI)+0.132
+				X3_2 = -radius * math.cos((theta+5.625)/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Y3_2 = -radius * math.sin((theta+5.625)/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Z3_2 = radius * math.cos((fieta+4.0625) /180*PI)+0.132
 
-			modelFile.write('3 0 1 3\n')
-			modelFile.write('3 0 3 2\n')
-			modelFile.write('3 4 6 7\n')
-			modelFile.write('3 4 7 5\n')
-			modelFile.write('3 0 4 5\n')
-			modelFile.write('3 0 5 1\n')
-			modelFile.write('3 2 3 7\n')
-			modelFile.write('3 2 7 6\n')
-			modelFile.write('3 0 2 6\n')
-			modelFile.write('3 0 6 4\n')
-			modelFile.write('3 1 5 7\n')
-			modelFile.write('3 1 7 3')
+				X4_1 = -(radius+0.031) * math.cos((theta+5.625)/180*PI) * math.sin(fieta /180*PI)
+				Y4_1 = -(radius+0.031) * math.sin((theta+5.625)/180*PI) * math.sin(fieta /180*PI)
+				Z4_1 = (radius+ 0.031) * math.cos(fieta /180*PI)+0.132
+				X4_2 = -(radius+0.031) * math.cos((theta+5.625)/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Y4_2 = -(radius+0.031) * math.sin((theta+5.625)/180*PI) * math.sin((fieta+4.0625) /180*PI)
+				Z4_2 = (radius+ 0.031) * math.cos((fieta+4.0625) /180*PI)+0.132
+
+
+				modelFile.write('OFF\n')
+				modelFile.write('8 12 0\n')
+
+				modelFile.write(str(X1_1) + ' ' +str(Y1_1)+ ' '+ str(Z1_1)  +'\n')
+				modelFile.write(str(X1_2) + ' ' +str(Y1_2)+ ' '+ str(Z1_2)  +'\n')
+				modelFile.write(str(X2_1) + ' ' +str(Y2_1)+ ' '+ str(Z2_1)  +'\n')
+				modelFile.write(str(X2_2) + ' ' +str(Y2_2)+ ' '+ str(Z2_2)  +'\n')
+				modelFile.write(str(X3_1) + ' ' +str(Y3_1)+ ' '+ str(Z3_1)  +'\n')
+				modelFile.write(str(X3_2) + ' ' +str(Y3_2)+ ' '+ str(Z3_2)  +'\n')
+				modelFile.write(str(X4_1) + ' ' +str(Y4_1)+ ' '+ str(Z4_1)  +'\n')
+				modelFile.write(str(X4_2) + ' ' +str(Y4_2)+ ' '+ str(Z4_2)  +'\n')
+
+				modelFile.write('3 0 1 3\n')
+				modelFile.write('3 0 3 2\n')
+				modelFile.write('3 4 6 7\n')
+				modelFile.write('3 4 7 5\n')
+				modelFile.write('3 0 4 5\n')
+				modelFile.write('3 0 5 1\n')
+				modelFile.write('3 2 3 7\n')
+				modelFile.write('3 2 7 6\n')
+				modelFile.write('3 0 2 6\n')
+				modelFile.write('3 0 6 4\n')
+				modelFile.write('3 1 5 7\n')
+				modelFile.write('3 1 7 3')
 
 
 
