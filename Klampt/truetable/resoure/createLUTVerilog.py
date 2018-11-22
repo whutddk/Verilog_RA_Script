@@ -39,9 +39,9 @@ def write_verilog():
 
 
 		strSyntax = strSyntax +'module prm_LUT_chk(\n'
-		strSyntax = strSyntax + '	input [4:0] X,\n'
-		strSyntax = strSyntax + '	input [6:0] Y,\n'
-		strSyntax = strSyntax + '	input [5:0] Z,\n'
+		strSyntax = strSyntax + '	input [4:0] r,\n'
+		strSyntax = strSyntax + '	input [5:0] fi,\n'
+		strSyntax = strSyntax + '	input [5:0] thr,\n'
 		strSyntax = strSyntax + '	output [1033:0] edge_mask\n'
 		strSyntax = strSyntax + ');\n\n'
 		strSyntax = strSyntax + '	reg [1033:0] edge_mask_reg;\n'
@@ -51,10 +51,10 @@ def write_verilog():
 
 		verilogFile.write(strSyntax);
 		for j in range(0,1034): #all edge
-			strData = '    case({X,Y,Z})\n'
+			strData = '    case({r,fi,thr})\n'
 			active  = False
 			
-			for i in range(0,32768): #all pix
+			for i in range(0,16384): #all pix
 				if (trueTable[i][j] == 1):
 					active  = True
 					strData = strData + '		15\'b' + bin(i)[2:16] +',\n'
