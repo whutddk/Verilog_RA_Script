@@ -57,7 +57,7 @@ def write_verilog():
 			for i in range(0,16384): #all pix
 				if (trueTable[i][j] == 1):
 					active  = True
-					strData = strData + '		15\'b' + bin(i)[2:16] +',\n'
+					strData = strData + '		14\'b' + bin(i)[2:16] +',\n'
 			if ( active == True ):
 				strData = strData[0:-2]
 				strData = strData + ': edge_mask_reg[' + str(j) + '] <= 1\'b1;\n '
