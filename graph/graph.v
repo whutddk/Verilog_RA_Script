@@ -32,80 +32,40 @@ module flatten #(
 	input [7:0] endpoint,
 
 
-	output [10:0] activeRoute
 )
 
-// reg flattenSearchButton = 1'b0;
 
-wire  [63:0] Point_wire;
-reg [63:0] Pointstart_reg;
-reg [1023:0] activeRoute_Positive;
-reg [1023:0] activeRoute_Negedge;
+reg [65:0] ActivePose = 66'b0;
 
 
-always @(negedge clk ) begin
-	if (!RST_n) begin
+
+
+always @(posedge clk or posedge rst) begin
+	if (rst) begin
+		// reset
 		
 	end
-	else begin
-		if ( INIT )begin
-			Pointstart_reg[63:0] = 64'b0;
-			Pointstart_reg[startPoint] <= 1'b1;
-			edgeMask_Posedge_reg[1023:0] <= edgeMask[1023:0];
-			edgeMask_Negedge_reg[1023:0] <= edgeMask[1023:0];
-		end
-
-		else if ( anti_Flow ) begin
-			Pointstart_reg[endPoint] <= 1'b1;
-			edgeMask_Posedge_reg[1023:0] <= edgeMask[1023:0] | ~activeRoute_Positive[1023:0];
-			edgeMask_Negedge_reg[1023:0] <= edgeMask[1023:0] | ~activeRoute_Negedge[1023:0];
-		end
-
-
-
+	else if (INIT) begin
+		
 	end
-end
-
-assign complete = Point_wire[endpoint];
-
-// assign Activeroute0 = Point[] | Point[] | Point[];
-assign Point_wire[0] = Activeroute[] | Activeroute[] | Activeroute[] | ... | Pointstart_reg[0];
-assign 
-....
-assign Point_wire[64] = ;
-
-//edge 0
-always @(posedge CLK ) begin
-	if (!RST_n ) begin
-		// reset	
+	else if ( forward )begin
+		
 	end
-	else if ( complete == 1'b0 && activeRoute_Negedge[0] == 1'b0 && edgeMask_Posedge_reg[0] != 1'b1 )begin
-			Activeroute_Positive[0] <= Point_wire[];
-	end
-	else begin//(complete == 0)
-
+	else if ( backward) begin
+		
 	end
 
+	else if ( PUTOUT ) begin
+		
+	end
 
+	else //idel
+	begin
 		
 	end
 end
 
-//edge0 
-always @(negedge CLK) begin
-	if ( !RST_n )begin
-		
-	end
-	else if ( complete == 1'b0 && activeRoute_Positive[0] == 1'b0 && edgeMask_Negedge)reg[0] != 1'b1)begin
-		activeRoute_Negedge[0] <= Point_wire[];
-		
-	end
-end
 
 
 endmodule
-
-
-//本身就是双向的传输
-
 
