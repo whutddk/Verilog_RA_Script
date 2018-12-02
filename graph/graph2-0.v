@@ -109,11 +109,10 @@ always @(posedge CLK or !RST_n) begin
 		activeEdge[9] <= 1034'b0;
 
 		activePose <= (65'b1 << ENDPoint);
-
 	end
 
-	else if ( (state == FORWARD_WORK) || (state == BACKWARD_WORK) ) begin
-		// if ( leverCnt < maxLever ) begin //check in another logic
+	else if ( state == FORWARD_WORK) begin
+
 		if ( ramAddress <= 11'd1034 ) begin
 
 			leverCnt <= leverCnt;
@@ -123,20 +122,8 @@ always @(posedge CLK or !RST_n) begin
 
 				if ( ((activePose & routeLine) ^) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
 					
-					activePose <= activePose | routeLine;//mark the pose to 1 to active it
-					
-					if ( state == FORWARD_WORKW ) begin
-						activeEdge[leverCnt] <= activeEdge[leverCnt] | (1034'b1 << ramAddress);//do not check this edge in the forward state //(prevent anti-flow)
-					end
-
-					else if ( state == BACKWARD_WORK ) begin
-						leverCnt <= leverCnt + 1'd1;
-
-						ramAddress <= 0;
-						OUTPUT !
-					end
-					else begin
-					end
+					activePose <= activePose | routeLine;//mark the pose to 1 to active it			
+					activeEdge[leverCnt] <= activeEdge[leverCnt] | (1034'b1 << ramAddress);//do not check this edge in the forward state //(prevent anti-flow)
 				end
 				else begin
 				end
@@ -148,8 +135,40 @@ always @(posedge CLK or !RST_n) begin
 			leverCnt <= leverCnt + 1'd1;
 			ramAddress <= 0;
 		end
-		// end
 	end
+
+	else if (state == BACKWARD_WORK)  begin
+		
+		if ( ramAddress <= 11'd1034 ) begin
+
+			leverCnt <= leverCnt;
+			ramAddress <= ramAddress + 11'd1;
+
+			if ( edgeMask_reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
+
+				if ( ((activePose & routeLine) ^) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
+					
+					activePose <= activePose | routeLine;//mark the pose to 1 to active it
+	
+					leverCnt <= leverCnt + 1'd1;
+
+					ramAddress <= 11'd0;
+					OUTPUT <= ramAddress;
+
+				end
+				else begin
+				end
+			end
+			else begin
+			end
+		end
+		else begin//一层扫完了 ramAddress > 11'd1034
+			__ERROR__
+		end
+	end
+	end
+		
+
 
 end
 
@@ -195,7 +214,9 @@ always @(negedge CLK or !RST_n) begin
 	end
 
 	else if ( state == BACKWARD_WORK )begin
-		
+		if ( leverCnt == maxLever ) begin
+
+			__FINISH__
 	end
 
 	else begin//idle
