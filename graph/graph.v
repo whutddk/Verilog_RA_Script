@@ -32,9 +32,9 @@ module flatten #(
 	input [7:0] endpoint,
 
 	//RAM
-	output [10:0] RAM_address;//0~1034
-	input [65:0] RAM_routeLine;	//01100000000
-)
+	output [10:0] RAM_address,//0~1034
+	input [65:0] RAM_routeLine,	//01100000000
+);
 
 
 reg [65:0] ActivePose;					//可达的点
