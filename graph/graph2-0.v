@@ -38,12 +38,21 @@ module graph
 	output reg [10:0] ramAddress,
 	input [15:0] RAMData,
 
-	output [109:0] selectEdge,
+	output reg [1033:0] edgeMask_Reg,
+	output reg [109:0] selectEdge,
 
 
 	output reg [2:0] state
 
 );
+
+parameter FORWARD_INIT = 3'd0;
+parameter FORWARD_WORK = 3'd1;
+parameter BACKWARD_INIT = 3'd2;
+parameter BACKWARD_WORK = 3'd3;
+parameter FAIL = 3'd4;
+parameter FINISH = 3'd5;
+
 
 wire [7:0] firstPose = RAMData[15:8];
 wire [7:0] secondPose = RAMData[7:0];
@@ -51,12 +60,15 @@ wire [15:0] routeLine = (66'b1 << firstPose) | (66'b1 << secondPose);
 
 
 reg [65:0] activePose;
-reg [1033:0] activeEdge[0:10];
-reg [1033:0] edgeMask_Reg;
+reg [1033:0] activeEdge[0:9];
+// reg [1033:0] edgeMask_Reg;
 
 
 reg [3:0] maxLever;
 reg [3:0] leverCnt;
+
+
+selectEdge
 
 
 always @(posedge CLK or !RST_n) begin
@@ -156,7 +168,7 @@ always @(posedge CLK or !RST_n) begin
 					leverCnt <= leverCnt + 1'd1;
 
 					ramAddress <= 11'd0;
-					OUTPUT <= ramAddress;
+					selectEdge[leverCnt*11+:11] <= ramAddress;
 
 				end
 				else begin
@@ -184,12 +196,16 @@ always @(negedge CLK or !RST_n) begin
 		state <= FORWARD_INIT;
 		
 	end
+
+
 	else if ( state == FORWARD_INIT ) begin
 		maxLever <= 4'd10;
 
 		edgeMask_reg[1033:0] <= edgeMask[1033:0];
 
-		state <= FORWARD_WORK;
+		if ( control == 3'b010  ) begin
+			state <= FORWARD_WORK;
+		end
 
 	end
 
@@ -203,23 +219,27 @@ always @(negedge CLK or !RST_n) begin
 			maxLever <= leverCnt;	//only 
 			
 		end
-
-		if ( leverCnt == maxLever ) begin
-
-			__ERROR__
-
-		end // if ( leverCnt == maxLever )
-
 		else begin
 			state <= FORWARD_WORK;
 		end
 
+		if ( leverCnt == maxLever ) begin
+
+			state <= FAIL;
+
+		end // if ( leverCnt == maxLever )
+	end
+
+	else if ( state == BACKWARD_INIT )begin
+		if ( control == 3'b100 ) begin
+			state <= BACKWARD_WORK;
+		end
 	end
 
 	else if ( state == BACKWARD_WORK )begin
 		if ( leverCnt == maxLever ) begin
 
-			__FINISH__
+			state <= FINISH;
 	end
 
 	else begin//idle
