@@ -30,6 +30,7 @@ module graph
 	input CLK,
 	input RST_n,
 	input [1033:0] edgeMask,
+	input [2:0] control,
 	input [7:0] startPose,
 	input [7:0] endPose,
 
@@ -37,15 +38,17 @@ module graph
 	output reg [10:0] ramAddress,
 	input [15:0] RAMData,
 
-	output 
+	output [109:0] selectEdge,
+
+
+	output reg [2:0] state
+
 );
 
 wire [7:0] firstPose = RAMData[15:8];
 wire [7:0] secondPose = RAMData[7:0];
 wire [15:0] routeLine = (66'b1 << firstPose) | (66'b1 << secondPose);
 
-
-reg [2:0] state;
 
 reg [65:0] activePose;
 reg [1033:0] activeEdge[0:10];

@@ -17,16 +17,27 @@ edgeIndexBin = []
 def edge2BIN():
 	for edge in edgeIndex:
 		edgeBin = (0b1 << edge[0]) | (0b1 <<edge [1])
-		print bin(edgeBin)
+		
+		edgeIndexBin.append( edgeBin )
+	#print (edgeIndexBin)
+	
+	
+def search:
+	edgeCnt = 0
+	for edgeBin in edgeIndexBin:
+		if ( activePose & edgeBin ):
 
+			checkTemp = activePose & edgeBin
+			cnt = 0;
+			while( checkTemp ):
+				if ( checkTemp & 0b1 ):
+					cnt = cnt + 1
+				checkTemp = checkTemp >> 1
+			if ( cnt == 1 ):
+				activePose = activePose & edgeBin
+				activeEdge = 0b1 << edgeCnt
 
-# def search:
-# 	for edge in edgeIndex:
-# 		PoseNumA = edge[0]
-# 		PoseNumB = edge[1]
-# 		for pose in activePose:
-# 			if ( pose == edge[0] && pose  )
-
+		edgeCnt  = edgeCnt + 1
 
 if __name__ == "__main__":
 	edge2BIN()
