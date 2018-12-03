@@ -163,6 +163,9 @@
 
 /******************************user register***************************/
 	reg [1033:0] availableEdge = 1034'b0;
+	wire [109:0] selectEdge_Wire;
+	wire [1033:0] edgeMask_Wire;
+	wire [2:0] stateMonitor;
 /******************************user register***************************/
 
 
@@ -934,9 +937,9 @@
 		end // else
 	end // always @ ( posedge S_AXI_ACLK )
 
-wire [1033:0] edgeMask_Wire;
-wire [109:0] selectEdge_Wire;
-wire [2:0] stateMonitor;
+
+
+
 
 prm_LUT_chk i_prm_LUT_chk(
 	.X(slv_reg48[13:10]),
@@ -947,11 +950,10 @@ prm_LUT_chk i_prm_LUT_chk(
 
 
 
-.graph i_graph
-(
+graph i_graph(
 	.CLK(S_AXI_ACLK),
 	.RST_n(S_AXI_ARESETN),
-	.edgeMask(edgeMask),
+	.edgeMask(outputMask_Wire),
 	.control(slv_reg49[2:0]),
 	.startPose(slv_reg47[7:0]),
 	.endPose(slv_reg46[7:0]),

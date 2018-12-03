@@ -68,10 +68,8 @@ reg [3:0] maxLever;
 reg [3:0] leverCnt;
 
 
-selectEdge
 
-
-always @(posedge CLK or !RST_n) begin
+always @(posedge CLK ) begin
 	if (!RST_n) begin
 		ramAddress <= 10'd0;
 		leverCnt <= 4'd0;
@@ -105,7 +103,7 @@ always @(posedge CLK or !RST_n) begin
 		activeEdge[8] <= 1034'b0;
 		activeEdge[9] <= 1034'b0;
 
-		activePose <= (65'b1 << startPoint);
+		activePose <= (65'b1 << startPose);
 	end
 
 	else if ( state == BACKWARD_INIT ) begin
@@ -123,7 +121,7 @@ always @(posedge CLK or !RST_n) begin
 		activeEdge[8] <= 1034'b0;
 		activeEdge[9] <= 1034'b0;
 
-		activePose <= (65'b1 << ENDPoint);
+		activePose <= (65'b1 << endPose);
 	end
 
 	else if ( state == FORWARD_WORK) begin
@@ -133,9 +131,9 @@ always @(posedge CLK or !RST_n) begin
 			leverCnt <= leverCnt;
 			ramAddress <= ramAddress + 11'd1;
 
-			if ( edgeMask_reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
+			if ( edgeMask_Reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
 
-				if ( ((activePose & routeLine) ^) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
+				if ( (^(activePose & routeLine)) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
 					
 					activePose <= activePose | routeLine;//mark the pose to 1 to active it			
 					activeEdge[leverCnt] <= activeEdge[leverCnt] | (1034'b1 << ramAddress);//do not check this edge in the forward state //(prevent anti-flow)
@@ -146,7 +144,7 @@ always @(posedge CLK or !RST_n) begin
 			else begin
 			end
 		end
-		else begin//一层扫完了 ramAddress > 11'd1034
+		else begin//�?层扫完了 ramAddress > 11'd1034
 			leverCnt <= leverCnt + 1'd1;
 			ramAddress <= 0;
 		end
@@ -159,9 +157,9 @@ always @(posedge CLK or !RST_n) begin
 			leverCnt <= leverCnt;
 			ramAddress <= ramAddress + 11'd1;
 
-			if ( edgeMask_reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
+			if ( edgeMask_Reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
 
-				if ( ((activePose & routeLine) ^) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
+				if ( (^(activePose & routeLine)) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
 					
 					activePose <= activePose | routeLine;//mark the pose to 1 to active it
 	
@@ -177,20 +175,16 @@ always @(posedge CLK or !RST_n) begin
 			else begin
 			end
 		end
-		else begin//一层扫完了 ramAddress > 11'd1034
-			__ERROR__
+		else begin//�?层扫完了 ramAddress > 11'd1034
 		end
 	end
-	end
-		
-
 
 end
 
 
 
 //state INIT FORWARD BACKWARD 
-always @(negedge CLK or !RST_n) begin
+always @(negedge CLK) begin
 	if (!RST_n) begin
 		maxLever <= 4'd10;
 		state <= FORWARD_INIT;
@@ -201,7 +195,7 @@ always @(negedge CLK or !RST_n) begin
 	else if ( state == FORWARD_INIT ) begin
 		maxLever <= 4'd10;
 
-		edgeMask_reg[1033:0] <= edgeMask[1033:0];
+		edgeMask_Reg[1033:0] <= edgeMask[1033:0];
 
 		if ( control == 3'b010  ) begin
 			state <= FORWARD_WORK;
@@ -210,9 +204,9 @@ always @(negedge CLK or !RST_n) begin
 	end
 
 	else if (state == FORWARD_WORK) begin
-		if( (activePose >> endpoint) & 1'B1 == 1 ) begin
+		if( (activePose >> endPose) & 1'B1 == 1 ) begin
 			state <= BACKWARD_INIT;
-			edgeMask_reg <= edgeMask_reg | 
+			edgeMask_Reg <= edgeMask_Reg | 
 							~( activeEdge[0] | activeEdge[1] | activeEdge[2] | activeEdge[3]
 							| activeEdge[4] | activeEdge[5] | activeEdge[6] | activeEdge[7]
 							| activeEdge[8] | activeEdge[9] );	//only active edge in forward would be considered
@@ -240,6 +234,7 @@ always @(negedge CLK or !RST_n) begin
 		if ( leverCnt == maxLever ) begin
 
 			state <= FINISH;
+		end
 	end
 
 	else begin//idle
