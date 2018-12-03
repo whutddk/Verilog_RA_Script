@@ -1,7 +1,7 @@
 
 `timescale 1 ns / 1 ps
 
-	module graphSearching_v1_0 #
+	module prm_chk_v1_0 #
 	(
 		// Users to add parameters here
 
@@ -11,14 +11,12 @@
 
 		// Parameters of Axi Slave Bus Interface S00_AXI
 		parameter integer C_S00_AXI_DATA_WIDTH	= 32,
-		parameter integer C_S00_AXI_ADDR_WIDTH	= 7
+		parameter integer C_S00_AXI_ADDR_WIDTH	= 8
 	)
 	(
 		// Users to add ports here
-		input [1033:0] edgeMask,
 		output [10:0] ramAddress,
 		input [15:0] RAMData,
-
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -47,11 +45,10 @@
 		input wire  s00_axi_rready
 	);
 // Instantiation of Axi Bus Interface S00_AXI
-	graphSearching_v1_0_S00_AXI # ( 
+	prm_chk_v1_0_S00_AXI # ( 
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
-	) graphSearching_v1_0_S00_AXI_inst (
-		.edgeMask(edgeMask),
+	) prm_chk_v1_0_S00_AXI_inst (
 		.ramAddress(ramAddress),
 		.RAMData(RAMData),
 		.S_AXI_ACLK(s00_axi_aclk),
