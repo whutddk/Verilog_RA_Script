@@ -8,14 +8,16 @@ edgeIndex = [[1, 2], [0, 3], [1, 3], [2, 3], [1, 4], [2, 4], [1, 6], [2, 6], [4,
 
 def edgeIndex2Rom():
 	with open('./edgeIndex.coe','w') as edgeFile:
-		edgeFile.write('memory_initialization_radix=2;\n')
+		edgeFile.write('memory_initialization_radix=10;\n')
 		edgeFile.write('memory_initialization_vector=')
+		cnt = 0
 		for edge in edgeIndex:
-			string = 0b1 << edge[0] | 0b1 << edge[1]
-			string = bin(string)
-			edgeFile.write(string[2:]+',')
+			string = edge[0] << 8 | edge[1]
+			string =str(string)
+			edgeFile.write(string+',')
+			cnt = cnt +1 
 		edgeFile.write(';')
-
+		print cnt
 	
 
 
