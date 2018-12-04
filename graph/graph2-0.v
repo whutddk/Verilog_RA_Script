@@ -56,7 +56,7 @@ parameter FINISH = 3'd5;
 
 wire [7:0] firstPose = RAMData[15:8];
 wire [7:0] secondPose = RAMData[7:0];
-wire [15:0] routeLine = (66'b1 << firstPose) | (66'b1 << secondPose);
+wire [65:0] routeLine = (66'b1 << firstPose) | (66'b1 << secondPose);
 
 
 reg [65:0] activePose;
@@ -85,7 +85,7 @@ always @(posedge CLK ) begin
 		activeEdge[8] <= 1034'b0;
 		activeEdge[9] <= 1034'b0;
 
-		activePose <= 65'b0;
+		activePose <= 66'b0;
 	end
 
 	else if ( state == FORWARD_INIT )begin
@@ -103,7 +103,7 @@ always @(posedge CLK ) begin
 		activeEdge[8] <= 1034'b0;
 		activeEdge[9] <= 1034'b0;
 
-		activePose <= (65'b1 << startPose);
+		activePose <= (66'b1 << startPose);
 	end
 
 	else if ( state == BACKWARD_INIT ) begin
@@ -121,7 +121,7 @@ always @(posedge CLK ) begin
 		activeEdge[8] <= 1034'b0;
 		activeEdge[9] <= 1034'b0;
 
-		activePose <= (65'b1 << endPose);
+		activePose <= (66'b1 << endPose);
 	end
 
 	else if ( state == FORWARD_WORK) begin
@@ -133,7 +133,7 @@ always @(posedge CLK ) begin
 
 			if ( edgeMask_Reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
 
-				if ( (^(activePose & routeLine)) == 1'b1 ) begin //this edge can connect，and the connected pose is not active
+				if ( (^(activePose & routeLine)) == 1'b1 ) begin //this edge can connect and the connected pose is not active
 					
 					activePose <= activePose | routeLine;//mark the pose to 1 to active it			
 					activeEdge[leverCnt] <= activeEdge[leverCnt] | (1034'b1 << ramAddress);//do not check this edge in the forward state //(prevent anti-flow)
@@ -144,7 +144,7 @@ always @(posedge CLK ) begin
 			else begin
 			end
 		end
-		else begin//�?层扫完了 ramAddress > 11'd1034
+		else begin//ramAddress > 11'd1034
 			leverCnt <= leverCnt + 1'd1;
 			ramAddress <= 0;
 		end
