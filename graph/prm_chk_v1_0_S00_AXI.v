@@ -953,7 +953,7 @@ prm_LUT_chk i_prm_LUT_chk(
 graph i_graph(
 	.CLK(S_AXI_ACLK),
 	.RST_n(S_AXI_ARESETN),
-	.edgeMask(outputMask_Wire),
+	.edgeMask(availableEdge),
 	.control(slv_reg49[2:0]),
 	.startPose(slv_reg47[7:0]),
 	.endPose(slv_reg46[7:0]),
