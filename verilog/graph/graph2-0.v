@@ -86,6 +86,8 @@ always @(posedge CLK ) begin
 		activeEdge[9] <= 1034'b0;
 
 		activePose <= 66'b0;
+
+		selectEdge <= 110'd0;
 	end
 
 	else
@@ -215,7 +217,7 @@ always @(negedge CLK) begin
 	end
 
 	FORWARD_WORK: begin
-		if( (activePose >> endPose) & 1'B1 == 1 ) begin
+		if( (activePose >> endPose) & 66'b1 == 66'b1 ) begin
 			state <= BACKWARD_INIT;
 			edgeMask_Reg <= edgeMask_Reg | 
 							~( activeEdge[0] | activeEdge[1] | activeEdge[2] | activeEdge[3]
@@ -242,7 +244,7 @@ always @(negedge CLK) begin
 	end
 
 	BACKWARD_WORK: begin
-		if ( leverCnt == maxLever + 1'b1 ) begin
+		if ( (activePose >> startPose) & 66'b1 == 66'b1 ) begin
 
 			state <= FINISH;
 		end
