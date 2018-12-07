@@ -88,7 +88,12 @@ always @(posedge CLK ) begin
 		activePose <= 66'b0;
 	end
 
-	else if ( state == FORWARD_INIT )begin
+	else
+
+	case(state)
+
+	FORWARD_INIT: begin
+
 
 		ramAddress <= 10'd0;
 		leverCnt <= 4'd0;
@@ -106,7 +111,7 @@ always @(posedge CLK ) begin
 		activePose <= (66'b1 << startPose);
 	end
 
-	else if ( state == BACKWARD_INIT ) begin
+	 BACKWARD_INIT: begin
 
 		ramAddress <= 10'd0;
 		leverCnt <= 4'd0;
@@ -124,14 +129,14 @@ always @(posedge CLK ) begin
 		activePose <= (66'b1 << endPose);
 	end
 
-	else if ( state == FORWARD_WORK) begin
+	FORWARD_WORK: begin
 
-		if ( ramAddress <= 11'd1034 ) begin
+		if ( ramAddress < 11'd1034 ) begin
 
 			leverCnt <= leverCnt;
 			ramAddress <= ramAddress + 11'd1;
 
-			if ( edgeMask_Reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check
+			if ( edgeMask_Reg[ramAddress] != 1'b1 ) begin //this edge has passed the collision check and select again
 
 				if ( (^(activePose & routeLine)) == 1'b1 ) begin //this edge can connect and the connected pose is not active
 					
@@ -144,15 +149,15 @@ always @(posedge CLK ) begin
 			else begin
 			end
 		end
-		else begin//ramAddress > 11'd1034
+		else begin//ramAddress == 11'd1034
 			leverCnt <= leverCnt + 1'd1;
 			ramAddress <= 0;
 		end
 	end
 
-	else if (state == BACKWARD_WORK)  begin
+	BACKWARD_WORK:  begin
 		
-		if ( ramAddress <= 11'd1034 ) begin
+		if ( ramAddress < 11'd1034 ) begin
 
 			leverCnt <= leverCnt;
 			ramAddress <= ramAddress + 11'd1;
@@ -169,15 +174,21 @@ always @(posedge CLK ) begin
 					selectEdge[leverCnt*11+:11] <= ramAddress;
 
 				end
+
 				else begin
 				end
 			end
 			else begin
 			end
 		end
-		else begin//�?层扫完了 ramAddress > 11'd1034
+		else begin //ramAddress == 11'd1034
 		end
 	end
+
+	default: begin
+	end
+
+	endcase
 
 end
 
@@ -191,8 +202,8 @@ always @(negedge CLK) begin
 		
 	end
 
-
-	else if ( state == FORWARD_INIT ) begin
+	case (state)
+	FORWARD_INIT: begin
 		maxLever <= 4'd10;
 
 		edgeMask_Reg[1033:0] <= edgeMask[1033:0];
@@ -203,7 +214,7 @@ always @(negedge CLK) begin
 
 	end
 
-	else if (state == FORWARD_WORK) begin
+	FORWARD_WORK: begin
 		if( (activePose >> endPose) & 1'B1 == 1 ) begin
 			state <= BACKWARD_INIT;
 			edgeMask_Reg <= edgeMask_Reg | 
@@ -224,23 +235,23 @@ always @(negedge CLK) begin
 		end // if ( leverCnt == maxLever )
 	end
 
-	else if ( state == BACKWARD_INIT )begin
+	BACKWARD_INIT: begin
 		if ( control == 3'b100 ) begin
 			state <= BACKWARD_WORK;
 		end
 	end
 
-	else if ( state == BACKWARD_WORK )begin
-		if ( leverCnt == maxLever ) begin
+	BACKWARD_WORK: begin
+		if ( leverCnt == maxLever + 1'b1 ) begin
 
 			state <= FINISH;
 		end
 	end
 
-	else begin//idle
-
-
+	default: begin
 	end
+
+	endcase
 
 
 end
