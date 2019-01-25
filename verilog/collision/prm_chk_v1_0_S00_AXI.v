@@ -914,7 +914,7 @@
 	// reg [3:0] inputX = 4'b0;
 	// reg [4:0] inputY = 5'b0;
 	// reg [4:0] inputZ = 5'b0;
-
+    wire [13:0] inputIndex;
 	wire [1033:0] outputMask_Wire;
 
 	always @ ( posedge S_AXI_ACLK ) begin
@@ -935,12 +935,23 @@
 
 
 prm_LUT_chk i_prm_LUT_chk(
-	.X(slv_reg0[13:10]),
-	.Y(slv_reg0[9:5]),
-	.Z(slv_reg0[4:0]),
+	.X(inputIndex[13:10]),
+	.Y(inputIndex[9:5]),
+	.Z(inputIndex[4:0]),
 	.edge_mask(outputMask_Wire)
 );
 
+
+
+genvar i;
+generate 
+for ( i = 0; i < 14;i=i+1 )  begin
+(* DONT_TOUCH = "true" *) BUFG BUFG_inst (
+      .O(inputIndex[i]), // 1-bit output: Clock output
+      .I(slv_reg0[i])  // 1-bit input: Clock input
+   );
+end
+endgenerate
 
 	// User logic ends
 
