@@ -1,3 +1,11 @@
+# @File Name: createLUTX1Verilog.py
+# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\truetable-2-Verilog\createLUTX1Verilog.py
+# @Author: 29505
+# @Date:   2019-02-13 11:04:49
+# @Last Modified by:   29505
+# @Last Modified time: 2019-02-13 12:49:00
+# @Email: 295054118@whut.edu.cn
+
 import sys
 import time
 
@@ -5,12 +13,17 @@ import json
 
 import time
 
+
+Path = '../Result/250msx3/Ca/'
+# veriPath = '../Result/250msx3/Ca/verilog/LUTX1/'
+# TTPath = '../Result/250msx3/Ca/trueTable'
+
 trueTable = []
 
-def load_trueTable():
+def load_trueTable(k):
 	global trueTable
 
-	with open('../trueTable.json','r') as trueTableFile:
+	with open( Path + 'trueTable/trueTable512p'+ str(k) +'.json','r') as trueTableFile:
 		data = trueTableFile.read()
 		trueTable = json.loads(data)
 	#print trueTable
@@ -18,12 +31,12 @@ def load_trueTable():
 	pass
 
 
-def write_verilog():
+def write_verilog(k):
 	global trueTable
 
 	nowtime = time.localtime(time.time())
 
-	with open('./prm_LUT.v','w') as verilogFile:
+	with open('./prm_LUTX1_512p'+ str(k) +'.v','w') as verilogFile:
 
 		strSyntax = '/*******************************************\n'
 		strSyntax = strSyntax + '****** Wuhan university of technology ******\n'
@@ -38,20 +51,20 @@ def write_verilog():
 
 
 
-		strSyntax = strSyntax +'module prm_LUT_chk(\n'
-		strSyntax = strSyntax + '	input [4:0] r,\n'
-		strSyntax = strSyntax + '	input [5:0] fi,\n'
-		strSyntax = strSyntax + '	input [5:0] thr,\n'
-		strSyntax = strSyntax + '	output [1033:0] edge_mask\n'
+		strSyntax = strSyntax +'module prm_LUTX1_chk512p'+ str(k) +'(\n'
+		strSyntax = strSyntax + '	input [4:0] x,\n'
+		strSyntax = strSyntax + '	input [5:0] y,\n'
+		strSyntax = strSyntax + '	input [5:0] z,\n'
+		strSyntax = strSyntax + '	output [511:0] edge_mask_512p'+ str(k) + '\n'
 		strSyntax = strSyntax + ');\n\n'
-		strSyntax = strSyntax + '	reg [1033:0] edge_mask_reg;\n'
+		strSyntax = strSyntax + '	reg [511:0] edge_mask_reg_512p'+ str(k) + ';\n'
 		strSyntax = strSyntax + '	assign edge_mask = edge_mask_reg;\n\n'
 		strSyntax = strSyntax + 'always @( *) begin\n' 
 
 
 		verilogFile.write(strSyntax);
-		for j in range(0,1034): #all edge
-			strData = '    case({r,fi,thr})\n'
+		for j in range(0,512): #all edge
+			strData = '    case({x,y,z})\n'
 			active  = False
 			
 			for i in range(0,16384): #all pix
@@ -60,8 +73,8 @@ def write_verilog():
 					strData = strData + '		14\'b' + bin(i)[2:16] +',\n'
 			if ( active == True ):
 				strData = strData[0:-2]
-				strData = strData + ': edge_mask_reg[' + str(j) + '] <= 1\'b1;\n '
-			strData = strData + '		default: edge_mask_reg[' + str(j) + '] <= 1\'b0;\n '
+				strData = strData + ': edge_mask_reg_512p'+ str(k) + '[' + str(j) + '] <= 1\'b1;\n '
+			strData = strData + '		default: edge_mask_reg_512p'+ str(k) + '[' + str(j) + '] <= 1\'b0;\n '
 			strData = strData + '	endcase\n\n'
 			verilogFile.write(strData)
 
@@ -72,9 +85,9 @@ def write_verilog():
 
 	pass
 
-
-load_trueTable()
-write_verilog()
+for k in range(0,8):
+	load_trueTable(k)
+	write_verilog(k)
 print 'done!'
 
 

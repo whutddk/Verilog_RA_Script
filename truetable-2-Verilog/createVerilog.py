@@ -1,3 +1,11 @@
+# @File Name: createVerilog.py
+# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\truetable-2-Verilog\createVerilog.py
+# @Author: 29505
+# @Date:   2019-02-13 11:04:49
+# @Last Modified by:   29505
+# @Last Modified time: 2019-02-13 12:33:53
+# @Email: 295054118@whut.edu.cn
+
 import sys
 import time
 
