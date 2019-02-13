@@ -4,7 +4,7 @@
 // Engineer: 29505
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   29505
-// Last Modified time: 2019-02-13 15:59:28
+// Last Modified time: 2019-02-13 16:02:45
 // Email: 295054118@whut.edu.cn
 // Design Name: prm_chk_v1_0_S00_AXI.v  
 // Module Name:  
@@ -883,23 +883,23 @@
 			6'h17   : reg_data_out <= availableEdge[447:416];//13
 			6'h18   : reg_data_out <= availableEdge[479:448];//14
 			6'h19   : reg_data_out <= availableEdge[511:480];//15
-			6'h1A   : reg_data_out <= slv_reg26;
-			6'h1B   : reg_data_out <= slv_reg27;
-			6'h1C   : reg_data_out <= slv_reg28;
-			6'h1D   : reg_data_out <= slv_reg29;
-			6'h1E   : reg_data_out <= slv_reg30;
-			6'h1F   : reg_data_out <= slv_reg31;
-			6'h20   : reg_data_out <= slv_reg32;
-			6'h21   : reg_data_out <= slv_reg33;
-			6'h22   : reg_data_out <= slv_reg34;
-			6'h23   : reg_data_out <= slv_reg35;
-			6'h24   : reg_data_out <= slv_reg36;
-			6'h25   : reg_data_out <= slv_reg37;
-			6'h26   : reg_data_out <= slv_reg38;
-			6'h27   : reg_data_out <= slv_reg39;
-			6'h28   : reg_data_out <= slv_reg40;
-			6'h29   : reg_data_out <= slv_reg41;
-			6'h2A   : reg_data_out <= slv_reg42;
+			6'h1A   : reg_data_out <= 32'b0;
+			6'h1B   : reg_data_out <= 32'b0;
+			6'h1C   : reg_data_out <= 32'b0;
+			6'h1D   : reg_data_out <= 32'b0;
+			6'h1E   : reg_data_out <= 32'b0;
+			6'h1F   : reg_data_out <= 32'b0;
+			6'h20   : reg_data_out <= 32'b0;
+			6'h21   : reg_data_out <= 32'b0;
+			6'h22   : reg_data_out <= 32'b0;
+			6'h23   : reg_data_out <= 32'b0;
+			6'h24   : reg_data_out <= 32'b0;
+			6'h25   : reg_data_out <= 32'b0;
+			6'h26   : reg_data_out <= 32'b0;
+			6'h27   : reg_data_out <= 32'b0;
+			6'h28   : reg_data_out <= 32'b0;
+			6'h29   : reg_data_out <= 32'b0;
+			6'h2A   : reg_data_out <= 32'b0;
 			6'h2B   : reg_data_out <= slv_reg43;
 			6'h2C   : reg_data_out <= slv_reg44;
 			6'h2D   : reg_data_out <= slv_reg45;
