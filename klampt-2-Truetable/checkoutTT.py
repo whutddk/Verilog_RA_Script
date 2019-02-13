@@ -1,54 +1,64 @@
+# @File Name: checkoutTT.py
+# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\klampt-2-Truetable\checkoutTT.py
+# @Author: 29505
+# @Date:   2019-02-13 11:04:49
+# @Last Modified by:   29505
+# @Last Modified time: 2019-02-13 12:15:56
+# @Email: 295054118@whut.edu.cn
+
 import sys
 import time
 
 import json
 
-
+edgePath = '../../Klampt_Robotic_Arm_Script/gridModelEncode/CartesianCoordinates/250msx3grid/'
+TTptah = '../Result/250msx3/Ca/trueTable/'
 
 trueTable = []
 edge = []
 
-def load_empty_trueTable():
+def load_empty_trueTable(i):
 	global trueTable
 
-	with open('./trueTable.json','r') as trueTableFile:
+
+	with open(TTptah + 'trueTable512p'+ str(i) +'.json','r') as trueTableFile:
 		data = trueTableFile.read()
 		trueTable = json.loads(data)
-	#print trueTable
+
 
 	pass
 
 
-def load_edge():
+def load_edge(i):
 
 	global edge
 
-	with open('../edge.json','r') as edgeFile:
+	with open(edgePath + 'edge512p'+ str(i) +'.json','r') as edgeFile:
 		data = edgeFile.read()
 		edge = json.loads(data)
-		#print edge
+
 	pass
 
-def checkout_Truetable():
+def checkout_Truetable(i):
 
 	global edge
 	global trueTable
 
-	for i in xrange(0,1034):#check all edge
-		for j in xrange(0,16384):#check all pix
-			trueTable[j][i] = edge[i][j]
+	for k in range(0,512):#check all edge
+		for j in range(0,16384):#check all pix
+			trueTable[j][k] = edge[k][j]
 	pass
 
 	data = json.dumps(trueTable)
-	with open('./trueTable.json','w') as ttFile:
+	with open( TTptah + 'trueTable512p'+ str(i) +'.json','w') as ttFile:
 		ttFile.write(data)
 
 	pass
 
 
-
-load_edge()
-load_empty_trueTable()
-checkout_Truetable()
+for i in range (0,8):
+	load_edge(i)
+	load_empty_trueTable(i)
+	checkout_Truetable(i)
 
 
