@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-13 12:49:00
+# @Last Modified time: 2019-02-13 15:51:02
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -36,7 +36,7 @@ def write_verilog(k):
 
 	nowtime = time.localtime(time.time())
 
-	with open('./prm_LUTX1_512p'+ str(k) +'.v','w') as verilogFile:
+	with open(Path + 'verilog/LUTX1/prm_LUTX1_512p'+ str(k) +'.v','w') as verilogFile:
 
 		strSyntax = '/*******************************************\n'
 		strSyntax = strSyntax + '****** Wuhan university of technology ******\n'
@@ -52,13 +52,13 @@ def write_verilog(k):
 
 
 		strSyntax = strSyntax +'module prm_LUTX1_chk512p'+ str(k) +'(\n'
-		strSyntax = strSyntax + '	input [4:0] x,\n'
-		strSyntax = strSyntax + '	input [5:0] y,\n'
-		strSyntax = strSyntax + '	input [5:0] z,\n'
+		strSyntax = strSyntax + '	input [3:0] x,\n'
+		strSyntax = strSyntax + '	input [4:0] y,\n'
+		strSyntax = strSyntax + '	input [4:0] z,\n'
 		strSyntax = strSyntax + '	output [511:0] edge_mask_512p'+ str(k) + '\n'
 		strSyntax = strSyntax + ');\n\n'
 		strSyntax = strSyntax + '	reg [511:0] edge_mask_reg_512p'+ str(k) + ';\n'
-		strSyntax = strSyntax + '	assign edge_mask = edge_mask_reg;\n\n'
+		strSyntax = strSyntax + '	assign edge_mask_512p' + str(k) + '= edge_mask_reg_512p'+ str(k) +';\n\n'
 		strSyntax = strSyntax + 'always @( *) begin\n' 
 
 
@@ -88,7 +88,7 @@ def write_verilog(k):
 for k in range(0,8):
 	load_trueTable(k)
 	write_verilog(k)
-print 'done!'
+print ('done!')
 
 
 
