@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-13 15:51:02
+# @Last Modified time: 2019-02-13 16:00:23
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -13,8 +13,10 @@ import json
 
 import time
 
+gridStyle = 'Sp'
 
-Path = '../Result/250msx3/Ca/'
+
+Path = '../Result/250msx3/'+ gridStyle +'/'
 # veriPath = '../Result/250msx3/Ca/verilog/LUTX1/'
 # TTPath = '../Result/250msx3/Ca/trueTable'
 
@@ -51,7 +53,7 @@ def write_verilog(k):
 
 
 
-		strSyntax = strSyntax +'module prm_LUTX1_chk512p'+ str(k) +'(\n'
+		strSyntax = strSyntax +'module prm_LUTX1_'+gridStyle+'_chk512p'+ str(k) +'(\n'
 		strSyntax = strSyntax + '	input [3:0] x,\n'
 		strSyntax = strSyntax + '	input [4:0] y,\n'
 		strSyntax = strSyntax + '	input [4:0] z,\n'
