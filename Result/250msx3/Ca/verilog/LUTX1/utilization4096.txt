@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Wed Feb 13 18:40:27 2019
+| Date         : Wed Feb 13 22:01:11 2019
 | Host         : DESKTOP-PJN9KFR running 64-bit major release  (build 9200)
 | Command      : report_utilization -file K:/work/MAS2/PRM_robotic_arm/Verilog_RA_Script/Result/250msx3/Ca/verilog/LUTX1/utilization4096.txt -name utilization_1
 | Design       : TOP_wrapper
