@@ -1,4 +1,26 @@
 
+//////////////////////////////////////////////////////////////////////////////////
+// Company:    
+// Engineer: 29505
+// Create Date: 2019-02-13 11:04:50
+// Last Modified by:   29505
+// Last Modified time: 2019-02-13 16:02:45
+// Email: 295054118@whut.edu.cn
+// Design Name: prm_chk_v1_0_S00_AXI.v  
+// Module Name:  
+// Project Name:  
+// Target Devices:  
+// Tool Versions:  
+// Description:  
+// 
+// Dependencies:   
+// 
+// Revision:  
+// Revision  
+// Additional Comments:   
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 `timescale 1 ns / 1 ps
 
 	module prm_chk_v1_0_S00_AXI #
@@ -161,7 +183,7 @@
 	reg	 aw_en;
 
 /******************************user register***************************/
-	reg [1033:0] availableEdge = 1034'b0;
+	reg [511:0] availableEdge;
 /******************************user register***************************/
 
 
@@ -861,23 +883,23 @@
 			6'h17   : reg_data_out <= availableEdge[447:416];//13
 			6'h18   : reg_data_out <= availableEdge[479:448];//14
 			6'h19   : reg_data_out <= availableEdge[511:480];//15
-			6'h1A   : reg_data_out <= availableEdge[543:512];//16
-			6'h1B   : reg_data_out <= availableEdge[575:544];//17
-			6'h1C   : reg_data_out <= availableEdge[607:576];//18
-			6'h1D   : reg_data_out <= availableEdge[639:608];//19
-			6'h1E   : reg_data_out <= availableEdge[671:640];//20
-			6'h1F   : reg_data_out <= availableEdge[703:672];//21
-			6'h20   : reg_data_out <= availableEdge[735:704];//22
-			6'h21   : reg_data_out <= availableEdge[767:736];//23
-			6'h22   : reg_data_out <= availableEdge[799:768];//24
-			6'h23   : reg_data_out <= availableEdge[831:800];//25
-			6'h24   : reg_data_out <= availableEdge[863:832];//26
-			6'h25   : reg_data_out <= availableEdge[895:864];//27
-			6'h26   : reg_data_out <= availableEdge[927:896];//28
-			6'h27   : reg_data_out <= availableEdge[959:928];//29
-			6'h28   : reg_data_out <= availableEdge[991:960];//30
-			6'h29   : reg_data_out <= availableEdge[1023:992];//31
-			6'h2A   : reg_data_out <= availableEdge[1033:1024];//32
+			6'h1A   : reg_data_out <= 32'b0;
+			6'h1B   : reg_data_out <= 32'b0;
+			6'h1C   : reg_data_out <= 32'b0;
+			6'h1D   : reg_data_out <= 32'b0;
+			6'h1E   : reg_data_out <= 32'b0;
+			6'h1F   : reg_data_out <= 32'b0;
+			6'h20   : reg_data_out <= 32'b0;
+			6'h21   : reg_data_out <= 32'b0;
+			6'h22   : reg_data_out <= 32'b0;
+			6'h23   : reg_data_out <= 32'b0;
+			6'h24   : reg_data_out <= 32'b0;
+			6'h25   : reg_data_out <= 32'b0;
+			6'h26   : reg_data_out <= 32'b0;
+			6'h27   : reg_data_out <= 32'b0;
+			6'h28   : reg_data_out <= 32'b0;
+			6'h29   : reg_data_out <= 32'b0;
+			6'h2A   : reg_data_out <= 32'b0;
 			6'h2B   : reg_data_out <= slv_reg43;
 			6'h2C   : reg_data_out <= slv_reg44;
 			6'h2D   : reg_data_out <= slv_reg45;
@@ -915,30 +937,94 @@
 	// reg [4:0] inputY = 5'b0;
 	// reg [4:0] inputZ = 5'b0;
     wire [13:0] inputIndex;
-	wire [1033:0] outputMask_Wire;
+	wire [4095:0] outputMask_Wire;
+
+	wire [4:0] edgeOutputSel;
+
+	reg [4095:0] edgeResult;
+
+	assign edgeOutputSel[4:0] = slv_reg2[4:0];
+
+always @(*) begin
+	case(edgeOutputSel)
+	5'd0: availableEdge[511:0] <= edgeResult[511:0];
+	5'd1: availableEdge[511:0] <= edgeResult[1023:512];
+	5'd2: availableEdge[511:0] <= edgeResult[1535:1024];
+	5'd3: availableEdge[511:0] <= edgeResult[2047:1536];
+	5'd4: availableEdge[511:0] <= edgeResult[2559:2048];
+	5'd5: availableEdge[511:0] <= edgeResult[3071:2560];
+	5'd6: availableEdge[511:0] <= edgeResult[3583:3072];
+	5'd7: availableEdge[511:0] <= edgeResult[4095:3584];
+	default:availableEdge[511:0] <= 0;
+	endcase
+end
 
 	always @ ( posedge S_AXI_ACLK ) begin
 
 		if ( S_AXI_ARESETN == 1'b0 || slv_reg1[0] == 1'b1 ) begin
-			availableEdge <= 1034'b0;
+			edgeResult <= 1034'b0;
 			// inputX <= 4'b0;
 			// inputY <= 5'b0;
 			// inputZ <= 5'b0;
 		end // if ( S_AXI_ARESETN == 1'b0 )
 
 		else begin
-			availableEdge <= availableEdge | outputMask_Wire;
+			edgeResult <= edgeResult | outputMask_Wire;
 
 		end // else
 	end // always @ ( posedge S_AXI_ACLK )
 
 
 
-prm_LUT_chk i_prm_LUT_chk(
-	.X(inputIndex[13:10]),
-	.Y(inputIndex[9:5]),
-	.Z(inputIndex[4:0]),
-	.edge_mask(outputMask_Wire)
+
+prm_LUTX1_Ca_chk512p0 i_prm_LUT_chk_p0(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p0(outputMask_Wire[511:0])
+);
+
+prm_LUTX1_Ca_chk512p1 i_prm_LUT_chk_p1(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p1(outputMask_Wire[1023:512])
+);
+prm_LUTX1_Ca_chk512p2 i_prm_LUT_chk_p2(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p2(outputMask_Wire[1535:1024])
+);
+prm_LUTX1_Ca_chk512p3 i_prm_LUT_chk_p3(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p3(outputMask_Wire[2047:1536])
+);
+prm_LUTX1_Ca_chk512p4 i_prm_LUT_chk_p4(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p4(outputMask_Wire[2559:2048])
+);
+prm_LUTX1_Ca_chk512p5 i_prm_LUT_chk_p5(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p5(outputMask_Wire[3071:2560])
+);
+prm_LUTX1_Ca_chk512p6 i_prm_LUT_chk_p6(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p6(outputMask_Wire[3583:3072])
+);
+prm_LUTX1_Ca_chk512p7 i_prm_LUT_chk_p7(
+	.x(inputIndex[13:10]),
+	.y(inputIndex[9:5]),
+	.z(inputIndex[4:0]),
+	.edge_mask_512p7(outputMask_Wire[4095:3584])
 );
 
 
