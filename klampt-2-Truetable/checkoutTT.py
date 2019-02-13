@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-13 12:21:07
+# @Last Modified time: 2019-02-13 12:23:59
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -11,8 +11,8 @@ import time
 
 import json
 
-edgePath = '../../Klampt_Robotic_Arm_Script/gridModelEncode/PolarCoordinates/250msx3grid/'
-TTptah = '../Result/250msx3/Po/trueTable/'
+edgePath = '../../Klampt_Robotic_Arm_Script/gridModelEncode/sphericalCoordinate/250msx3grid/'
+TTptah = '../Result/250msx3/Sp/trueTable/'
 
 trueTable = []
 edge = []
