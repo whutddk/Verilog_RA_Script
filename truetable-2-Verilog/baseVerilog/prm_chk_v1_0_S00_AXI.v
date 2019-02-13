@@ -4,7 +4,7 @@
 // Engineer: 29505
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   29505
-// Last Modified time: 2019-02-13 22:34:07
+// Last Modified time: 2019-02-13 22:54:22
 // Email: 295054118@whut.edu.cn
 // Design Name: prm_chk_v1_0_S00_AXI.v  
 // Module Name:  
@@ -962,7 +962,7 @@ end
 	always @ ( posedge S_AXI_ACLK ) begin
 
 		if ( S_AXI_ARESETN == 1'b0 || slv_reg1[0] == 1'b1 ) begin
-			edgeResult <= 1034'b0;
+			edgeResult <= 4095'b0;
 			// inputX <= 4'b0;
 			// inputY <= 5'b0;
 			// inputZ <= 5'b0;
@@ -984,12 +984,12 @@ prm_LUTX1_Ca_chk512p0 i_prm_LUT_chk_p0(
 	.edge_mask_512p0(outputMask_Wire[511:0])
 );
 
-prm_LUTX1_Ca_chk512p1 i_prm_LUT_chk_p1(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p1(outputMask_Wire[1023:512])
-);
+// prm_LUTX1_Ca_chk512p1 i_prm_LUT_chk_p1(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p1(outputMask_Wire[1023:512])
+// );
 // prm_LUTX1_Ca_chk512p2 i_prm_LUT_chk_p2(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
@@ -1028,7 +1028,7 @@ prm_LUTX1_Ca_chk512p1 i_prm_LUT_chk_p1(
 // );
 
 // assign outputMask_Wire[4095:2048] = 2048'b0;
-assign outputMask_Wire[4095:1024] = 3072'b0;
+assign outputMask_Wire[4095:512] = 3584'b0;
 
 genvar i;
 generate 
