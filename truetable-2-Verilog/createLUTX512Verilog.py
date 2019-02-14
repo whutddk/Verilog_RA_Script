@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-14 16:41:19
+# @Last Modified time: 2019-02-14 17:15:04
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -13,7 +13,7 @@ import json
 
 import time
 
-gridStyle = 'Sp'
+gridStyle = 'Ca'
 
 Path = '../Result/250msx3/'+ gridStyle +'/'
 
@@ -33,7 +33,9 @@ def load_trueTable(k):
 def write_verilog(k):
 	global trueTable
 
-	with open(Path + 'verilog/LUTX1/prm_LUTX512_512p'+ str(k) +'.v','w') as verilogFile:
+	with open(Path + 'verilog/LUTX512/prm_LUTX512_512p'+ str(k) +'.v','w') as verilogFile:
+
+		nowtime = time.localtime(time.time())
 
 		strSyntax = '/*******************************************\n'
 		strSyntax = strSyntax + '****** Wuhan university of technology ******\n'
@@ -64,7 +66,7 @@ def write_verilog(k):
 
 
 		for i in range(0,16384):	#all case all pix
-			strSyntax =  '14\'d'+ str(i) + ': edgeMask_reg_512p'+ str(k) + ' <= 512\'b'
+			strSyntax =  '		14\'d'+ str(i) + ': edge_mask_reg_512p'+ str(k) + ' <= 512\'b'
 			strData = ''
 			for j in range(0,512): # all edge
 				strData = strData + str(trueTable[i][j])
@@ -78,13 +80,13 @@ def write_verilog(k):
 		strSyntax = strSyntax + '	endcase\n\n'
 		strSyntax = strSyntax +   'end\n'
 		strSyntax = strSyntax + 'endmodule\n\n'
-
+		verilogFile.write(strSyntax)
 	pass
 
-
-load_trueTable()
-write_verilog()
-print 'done!'
+for k in range(0,8):
+	load_trueTable(k)
+	write_verilog(k)
+print ('done!')
 
 
 
