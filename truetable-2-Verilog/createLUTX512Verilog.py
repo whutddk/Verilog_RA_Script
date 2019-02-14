@@ -3,7 +3,7 @@
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-14 17:15:04
+# @Last Modified time: 2019-02-14 21:19:05
 # @Email: 295054118@whut.edu.cn
 
 import sys
@@ -13,7 +13,7 @@ import json
 
 import time
 
-gridStyle = 'Ca'
+gridStyle = 'Po'
 
 Path = '../Result/250msx3/'+ gridStyle +'/'
 
