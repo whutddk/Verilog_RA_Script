@@ -4,7 +4,7 @@
 // Engineer: 29505
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   29505
-// Last Modified time: 2019-02-13 16:02:45
+// Last Modified time: 2019-02-14 16:27:02
 // Email: 295054118@whut.edu.cn
 // Design Name: prm_chk_v1_0_S00_AXI.v  
 // Module Name:  
@@ -962,7 +962,7 @@ end
 	always @ ( posedge S_AXI_ACLK ) begin
 
 		if ( S_AXI_ARESETN == 1'b0 || slv_reg1[0] == 1'b1 ) begin
-			edgeResult <= 1034'b0;
+			edgeResult <= 4095'b0;
 			// inputX <= 4'b0;
 			// inputY <= 5'b0;
 			// inputZ <= 5'b0;
@@ -977,62 +977,64 @@ end
 
 
 
-prm_LUTX1_Ca_chk512p0 i_prm_LUT_chk_p0(
+prm_LUTX1_Sp_chk512p0 i_prm_LUT_chk_p0(
 	.x(inputIndex[13:10]),
 	.y(inputIndex[9:5]),
 	.z(inputIndex[4:0]),
 	.edge_mask_512p0(outputMask_Wire[511:0])
 );
 
-prm_LUTX1_Ca_chk512p1 i_prm_LUT_chk_p1(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p1(outputMask_Wire[1023:512])
-);
-prm_LUTX1_Ca_chk512p2 i_prm_LUT_chk_p2(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p2(outputMask_Wire[1535:1024])
-);
-prm_LUTX1_Ca_chk512p3 i_prm_LUT_chk_p3(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p3(outputMask_Wire[2047:1536])
-);
-prm_LUTX1_Ca_chk512p4 i_prm_LUT_chk_p4(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p4(outputMask_Wire[2559:2048])
-);
-prm_LUTX1_Ca_chk512p5 i_prm_LUT_chk_p5(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p5(outputMask_Wire[3071:2560])
-);
-prm_LUTX1_Ca_chk512p6 i_prm_LUT_chk_p6(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p6(outputMask_Wire[3583:3072])
-);
-prm_LUTX1_Ca_chk512p7 i_prm_LUT_chk_p7(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p7(outputMask_Wire[4095:3584])
-);
+// prm_LUTX1_Sp_chk512p1 i_prm_LUT_chk_p1(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p1(outputMask_Wire[1023:512])
+// );
+// prm_LUTX1_Sp_chk512p2 i_prm_LUT_chk_p2(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p2(outputMask_Wire[1535:1024])
+// );
+// prm_LUTX1_Sp_chk512p3 i_prm_LUT_chk_p3(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p3(outputMask_Wire[2047:1536])
+// );
+// prm_LUTX1_Sp_chk512p4 i_prm_LUT_chk_p4(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p4(outputMask_Wire[2559:2048])
+// );
+// prm_LUTX1_Sp_chk512p5 i_prm_LUT_chk_p5(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p5(outputMask_Wire[3071:2560])
+// );
+// prm_LUTX1_Sp_chk512p6 i_prm_LUT_chk_p6(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p6(outputMask_Wire[3583:3072])
+// );
+// prm_LUTX1_Sp_chk512p7 i_prm_LUT_chk_p7(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p7(outputMask_Wire[4095:3584])
+// );
 
-
+// assign outputMask_Wire[4095:2048] = 2048'b0;
+// assign outputMask_Wire[4095:1024] = 3072'b0;
+assign outputMask_Wire[4095:512] = 3584'b0;
 
 genvar i;
 generate 
 for ( i = 0; i < 14;i=i+1 )  begin
-(* DONT_TOUCH = "true" *) BUFG BUFG_inst (
+BUFG BUFG_inst (
       .O(inputIndex[i]), // 1-bit output: Clock output
       .I(slv_reg0[i])  // 1-bit input: Clock input
    );
