@@ -1,9 +1,9 @@
-# @File Name: createLUTMAXVerilog.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\truetable-2-Verilog\createLUTMAXVerilog.py
+# @File Name: createLUTX512Verilog.py
+# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\truetable-2-Verilog\createLUTX512Verilog.py
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
-# @Last Modified time: 2019-02-13 20:47:40
+# @Last Modified time: 2019-02-14 16:41:19
 # @Email: 295054118@whut.edu.cn
 
 import sys
