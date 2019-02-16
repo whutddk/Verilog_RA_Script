@@ -4,7 +4,7 @@
 // Engineer: 29505
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   29505
-// Last Modified time: 2019-02-15 18:25:02
+// Last Modified time: 2019-02-16 08:09:35
 // Email: 295054118@whut.edu.cn
 // Design Name: prm_chk_v1_0_S00_AXI.v  
 // Module Name:  
@@ -37,6 +37,18 @@
 	)
 	(
 		// Users to add ports here
+		output [3:0] x,
+		output [4:0] y,
+		output [4:0] z,
+
+		input [511:0] edge_mask_512p0,
+		input [511:0] edge_mask_512p1,
+		input [511:0] edge_mask_512p2,
+		input [511:0] edge_mask_512p3,
+		input [511:0] edge_mask_512p4,
+		input [511:0] edge_mask_512p5,
+		input [511:0] edge_mask_512p6,
+		input [511:0] edge_mask_512p7,
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -975,52 +987,54 @@ end
 	end // always @ ( posedge S_AXI_ACLK )
 
 
+assign outputMask_Wire = {edge_mask_512p7,edge_mask_512p6,edge_mask_512p5,edge_mask_512p4,edge_mask_512p3,edge_mask_512p2,edge_mask_512p1,edge_mask_512p0};
+assign {x,y,z} = inputIndex;
 
 
-prm_LUTX512_Sp_chk512p0 i_prm_LUT_chk_p0(
-	.x(inputIndex[13:10]),
-	.y(inputIndex[9:5]),
-	.z(inputIndex[4:0]),
-	.edge_mask_512p0(outputMask_Wire[511:0])
-);
+// prm_Logic_Ca_chk512p0 i_prm_LUT_chk_p0(
+// 	.x(inputIndex[13:10]),
+// 	.y(inputIndex[9:5]),
+// 	.z(inputIndex[4:0]),
+// 	.edge_mask_512p0(outputMask_Wire[511:0])
+// );
 
-// prm_LUTX512_Sp_chk512p1 i_prm_LUT_chk_p1(
+// prm_Logic_Ca_chk512p1 i_prm_LUT_chk_p1(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
 // 	.edge_mask_512p1(outputMask_Wire[1023:512])
 // );
-// prm_LUTX512_Sp_chk512p2 i_prm_LUT_chk_p2(
+// prm_Logic_Ca_chk512p2 i_prm_LUT_chk_p2(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
 // 	.edge_mask_512p2(outputMask_Wire[1535:1024])
 // );
-// prm_LUTX512_Sp_chk512p3 i_prm_LUT_chk_p3(
+// prm_Logic_Ca_chk512p3 i_prm_LUT_chk_p3(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
 // 	.edge_mask_512p3(outputMask_Wire[2047:1536])
 // );
-// prm_LUTX512_Sp_chk512p4 i_prm_LUT_chk_p4(
+// prm_Logic_Ca_chk512p4 i_prm_LUT_chk_p4(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
 // 	.edge_mask_512p4(outputMask_Wire[2559:2048])
 // );
-// prm_LUTX512_Sp_chk512p5 i_prm_LUT_chk_p5(
+// prm_Logic_Ca_chk512p5 i_prm_LUT_chk_p5(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
 // 	.edge_mask_512p5(outputMask_Wire[3071:2560])
 // );
-// prm_LUTX512_Sp_chk512p6 i_prm_LUT_chk_p6(
+// prm_Logic_Ca_chk512p6 i_prm_LUT_chk_p6(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
 // 	.edge_mask_512p6(outputMask_Wire[3583:3072])
 // );
-// prm_LUTX512_Sp_chk512p7 i_prm_LUT_chk_p7(
+// prm_Logic_Ca_chk512p7 i_prm_LUT_chk_p7(
 // 	.x(inputIndex[13:10]),
 // 	.y(inputIndex[9:5]),
 // 	.z(inputIndex[4:0]),
@@ -1029,7 +1043,7 @@ prm_LUTX512_Sp_chk512p0 i_prm_LUT_chk_p0(
 
 // assign outputMask_Wire[4095:2048] = 2048'b0;
 // assign outputMask_Wire[4095:1024] = 3072'b0;
-assign outputMask_Wire[4095:512] = 3584'b0;
+// assign outputMask_Wire[4095:512] = 3584'b0;
 
 genvar i;
 generate 
