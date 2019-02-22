@@ -1,4 +1,26 @@
 
+//////////////////////////////////////////////////////////////////////////////////
+// Company:    
+// Engineer: 29505
+// Create Date: 2019-02-13 11:04:50
+// Last Modified by:   29505
+// Last Modified time: 2019-02-16 08:09:38
+// Email: 295054118@whut.edu.cn
+// Design Name: prm_chk_v1_0.v  
+// Module Name:  
+// Project Name:  
+// Target Devices:  
+// Tool Versions:  
+// Description:  
+// 
+// Dependencies:   
+// 
+// Revision:  
+// Revision  
+// Additional Comments:   
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
 `timescale 1 ns / 1 ps
 
 	module prm_chk_v1_0 #
@@ -15,7 +37,18 @@
 	)
 	(
 		// Users to add ports here
+		output [3:0] x,
+		output [4:0] y,
+		output [4:0] z,
 
+		input [511:0] edge_mask_512p0,
+		input [511:0] edge_mask_512p1,
+		input [511:0] edge_mask_512p2,
+		input [511:0] edge_mask_512p3,
+		input [511:0] edge_mask_512p4,
+		input [511:0] edge_mask_512p5,
+		input [511:0] edge_mask_512p6,
+		input [511:0] edge_mask_512p7,
 		// User ports ends
 		// Do not modify the ports beyond this line
 
@@ -48,6 +81,19 @@
 		.C_S_AXI_DATA_WIDTH(C_S00_AXI_DATA_WIDTH),
 		.C_S_AXI_ADDR_WIDTH(C_S00_AXI_ADDR_WIDTH)
 	) prm_chk_v1_0_S00_AXI_inst (
+		.x(x),
+		.y(y),
+		.z(z),
+
+		.edge_mask_512p0(edge_mask_512p0),
+		.edge_mask_512p1(edge_mask_512p1),
+		.edge_mask_512p2(edge_mask_512p2),
+		.edge_mask_512p3(edge_mask_512p2),
+		.edge_mask_512p4(edge_mask_512p4),
+		.edge_mask_512p5(edge_mask_512p5),
+		.edge_mask_512p6(edge_mask_512p6),
+		.edge_mask_512p7(edge_mask_512p7),
+
 		.S_AXI_ACLK(s00_axi_aclk),
 		.S_AXI_ARESETN(s00_axi_aresetn),
 		.S_AXI_AWADDR(s00_axi_awaddr),
