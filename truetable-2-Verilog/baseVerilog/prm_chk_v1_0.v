@@ -4,7 +4,7 @@
 // Engineer: 29505
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   29505
-// Last Modified time: 2019-02-24 21:52:49
+// Last Modified time: 2019-02-24 22:16:56
 // Email: 295054118@whut.edu.cn
 // Design Name: prm_chk_v1_0.v  
 // Module Name:  
@@ -66,7 +66,7 @@ module prm_chk_v1_0 #
 
 	reg [4095:0] edgeResult;
 
-	wire [511:0] selReg;
+	reg [511:0] selReg;
 
 
 always @(*) begin
@@ -79,33 +79,37 @@ always @(*) begin
 		3'd4: selReg[511:0] <= edgeResult[2559:2048];
 		3'd5: selReg[511:0] <= edgeResult[3071:2560];
 		3'd6: selReg[511:0] <= edgeResult[3583:3072];
-		3'd7: selReg[511:0] <= edgeResult[4096:3584];
+		3'd7: selReg[511:0] <= edgeResult[4095:3584];
 
 	default:selReg[511:0] <= 511'd0;
 	endcase
 end
 
+reg [31:0] result_imp_reg;
+assign result_imp = result_imp_reg;
+
+
 always @(*) begin
 	case(sel2)
 
-		4'd0: result_imp[31:0] <= selReg[31:0];
-		4'd1: result_imp[31:0] <= selReg[63:32];
-		4'd2: result_imp[31:0] <= selReg[95:64];
-		4'd3: result_imp[31:0] <= selReg[127:96];
-		4'd4: result_imp[31:0] <= selReg[159:128];
-		4'd5: result_imp[31:0] <= selReg[191:160];
-		4'd6: result_imp[31:0] <= selReg[223:192];
-		4'd7: result_imp[31:0] <= selReg[255:224];
-		4'd8: result_imp[31:0] <= selReg[287:256];
-		4'd9: result_imp[31:0] <= selReg[319:288];
-		4'd10: result_imp[31:0] <= selReg[351:320];
-		4'd11: result_imp[31:0] <= selReg[383:352];
-		4'd12: result_imp[31:0] <= selReg[415:384];
-		4'd13: result_imp[31:0] <= selReg[447:416];
-		4'd14: result_imp[31:0] <= selReg[479:448];
-		4'd15: result_imp[31:0] <= selReg[511:480];
+		4'd0: result_imp_reg[31:0] <= selReg[31:0];
+		4'd1: result_imp_reg[31:0] <= selReg[63:32];
+		4'd2: result_imp_reg[31:0] <= selReg[95:64];
+		4'd3: result_imp_reg[31:0] <= selReg[127:96];
+		4'd4: result_imp_reg[31:0] <= selReg[159:128];
+		4'd5: result_imp_reg[31:0] <= selReg[191:160];
+		4'd6: result_imp_reg[31:0] <= selReg[223:192];
+		4'd7: result_imp_reg[31:0] <= selReg[255:224];
+		4'd8: result_imp_reg[31:0] <= selReg[287:256];
+		4'd9: result_imp_reg[31:0] <= selReg[319:288];
+		4'd10: result_imp_reg[31:0] <= selReg[351:320];
+		4'd11: result_imp_reg[31:0] <= selReg[383:352];
+		4'd12: result_imp_reg[31:0] <= selReg[415:384];
+		4'd13: result_imp_reg[31:0] <= selReg[447:416];
+		4'd14: result_imp_reg[31:0] <= selReg[479:448];
+		4'd15: result_imp_reg[31:0] <= selReg[511:480];
 
-	default:selReg[31:0] <= 32'd0;
+	default:result_imp_reg[31:0] <= 32'd0;
 	endcase
 end
 
