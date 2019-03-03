@@ -23,10 +23,7 @@
 
 `timescale 1 ns / 1 ps
 
-module prm_chk_v1_0 #
-	(
-
-	)
+module prm_chk_v1_0 
 	(
 		// Users to add ports here
 		input CLK,
@@ -35,7 +32,7 @@ module prm_chk_v1_0 #
 		input [2:0] sel1,
 		input [7:0] sel2,
 
-		input [13:0] slv_reg0,
+		input [13:0] xyzInput,
 
 		output [3:0] x,
 		output [4:0] y,
@@ -58,8 +55,6 @@ module prm_chk_v1_0 #
 
 
 	// Add user logic here
-
-    wire [13:0] inputIndex;
 	wire [4095:0] outputMask_Wire;
 
 
@@ -67,6 +62,18 @@ module prm_chk_v1_0 #
 	reg [4095:0] edgeResult;
 
 	reg [511:0] selReg;
+	
+	reg [13:0] slv_reg0;
+
+always @(posedge CLK)begin
+if (!RST_n) begin
+    slv_reg0 <= 14'd0;
+end
+else begin
+    slv_reg0 <= xyzInput;
+end
+end
+
 
 
 always @(*) begin
@@ -132,19 +139,10 @@ end
 
 
 assign outputMask_Wire = {edge_mask_512p7,edge_mask_512p6,edge_mask_512p5,edge_mask_512p4,edge_mask_512p3,edge_mask_512p2,edge_mask_512p1,edge_mask_512p0};
-assign {x,y,z} = inputIndex;
+assign {x,y,z} = slv_reg0;
 
 
 
-genvar i;
-generate 
-for ( i = 0; i < 14;i=i+1 )  begin
-BUFG BUFG_inst (
-      .O(inputIndex[i]), // 1-bit output: Clock output
-      .I(slv_reg0[i])  // 1-bit input: Clock input
-   );
-end
-endgenerate
 
 
 
