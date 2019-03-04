@@ -1,5 +1,14 @@
+# -*- coding: utf-8 -*-
 # @File Name: createLUTX1Verilog.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\truetable-2-Verilog\createLUTX1Verilog.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Verilog_RA_Script\truetable-2-Verilog\createLUTX1Verilog.py
+# @Author: Ruige_Lee
+# @Date:   2019-02-19 11:59:19
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-03-04 16:34:52
+# @Email: 295054118@whut.edu.cn"
+
+# @File Name: createLUTX1Verilog.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Verilog_RA_Script\truetable-2-Verilog\createLUTX1Verilog.py
 # @Author: 29505
 # @Date:   2019-02-13 11:04:49
 # @Last Modified by:   29505
@@ -14,9 +23,13 @@ import json
 import time
 
 gridStyle = 'Sp'
+x = 4
+y = 5
+z = 5
+lenth = 16384
+style = '250msx3'
 
-
-Path = '../Result/250msx3/'+ gridStyle +'/'
+Path = '../Result/'+ gridStyle +'/+style+/'+str(x)+'-'+str(y)+'-'+str(z)+'/'
 # veriPath = '../Result/250msx3/Ca/verilog/LUTX1/'
 # TTPath = '../Result/250msx3/Ca/trueTable'
 
@@ -53,10 +66,10 @@ def write_verilog(k):
 
 
 
-		strSyntax = strSyntax +'module prm_LUTX1_'+gridStyle+'_chk512p'+ str(k) +'(\n'
-		strSyntax = strSyntax + '	input [3:0] x,\n'
-		strSyntax = strSyntax + '	input [4:0] y,\n'
-		strSyntax = strSyntax + '	input [4:0] z,\n'
+		strSyntax = strSyntax +'module prm_LUTX1_'+gridStyle+'-'+str(x)+'-'+str(y)+'-'+str(z)+'_chk512p'+ str(k) +'(\n'
+		strSyntax = strSyntax + '	input ['str(x-1)':0] x,\n'
+		strSyntax = strSyntax + '	input ['str(y-1)':0] y,\n'
+		strSyntax = strSyntax + '	input ['str(z-1)':0] z,\n'
 		strSyntax = strSyntax + '	output [511:0] edge_mask_512p'+ str(k) + '\n'
 		strSyntax = strSyntax + ');\n\n'
 		strSyntax = strSyntax + '	reg [511:0] edge_mask_reg_512p'+ str(k) + ';\n'
@@ -69,10 +82,10 @@ def write_verilog(k):
 			strData = '    case({x,y,z})\n'
 			active  = False
 			
-			for i in range(0,16384): #all pix
+			for i in range(0,lenth): #all pix
 				if (trueTable[i][j] == 1):
 					active  = True
-					strData = strData + '		14\'b' + bin(i)[2:16] +',\n'
+					strData = strData + str(x+y+z)'\'b' + bin(i)[2:x+y+z+2] +',\n'
 			if ( active == True ):
 				strData = strData[0:-2]
 				strData = strData + ': edge_mask_reg_512p'+ str(k) + '[' + str(j) + '] <= 1\'b1;\n '
