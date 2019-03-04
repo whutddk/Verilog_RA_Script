@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-19 11:59:19
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 15:25:08
+# @Last Modified time: 2019-03-04 15:37:18
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: createEmptyTT.py
@@ -22,7 +22,7 @@ import json
 
 trueTable = []
 
-path = '../Result/Po/100msx3/4-5-5/trueTable/'
+path = '../Result/Sp/250msx3/4-5-4/trueTable/'
 
 def create_empty_trueTable():
 	global trueTable
@@ -30,7 +30,7 @@ def create_empty_trueTable():
 	output = [ 0 for k in range(0,512) ]
 	
 	#print output
-	for i in range(0,16384):
+	for i in range(0,8192):
 		trueTable.append(output)
 	#print trueTable
 	
