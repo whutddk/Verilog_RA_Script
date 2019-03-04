@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-19 11:59:19
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 15:22:56
+# @Last Modified time: 2019-03-04 15:31:28
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: checkoutTT.py
@@ -20,8 +20,8 @@ import time
 
 import json
 
-edgePath = '../../Klampt_Robotic_Arm_Script/gridModelEncode/sphericalCoordinate/100msx3grid/'
-TTptah = '../Result/Sp/100msx3/4-5-5/trueTable/'
+edgePath = '../../Klampt_Robotic_Arm_Script/gridModelEncode/CartesianCoordinates/100msx3grid-ca/'
+TTptah = '../Result/Ca/100msx3/4-5-5/trueTable/'
 
 trueTable = []
 edge = []
