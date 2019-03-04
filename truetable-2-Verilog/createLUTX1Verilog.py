@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-19 11:59:19
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 17:06:11
+# @Last Modified time: 2019-03-04 17:07:15
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: createLUTX1Verilog.py
@@ -23,11 +23,11 @@ import json
 import time
 
 gridStyle = 'Ca'
-x = 4
+x = 3
 y = 4
 z = 4
-lenth = 4096
-style = '250msx3'
+lenth = 2048
+style = '100msx3'
 
 Path = '../Result/'+ gridStyle +'/'+style+'/'+str(x)+'-'+str(y)+'-'+str(z)+'/'
 # veriPath = '../Result/250msx3/Ca/verilog/LUTX1/'
