@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-02-19 11:59:19
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-04 15:39:58
+# @Last Modified time: 2019-03-04 15:42:18
 # @Email: 295054118@whut.edu.cn"
 
 # @File Name: checkoutTT.py
@@ -20,8 +20,8 @@ import time
 
 import json
 
-edgePath = '../../Klampt_Robotic_Arm_Script/accuracyDecrease/sp/4-5-4/250msx3/'
-TTptah = '../Result/Sp/250msx3/4-5-4/trueTable/'
+edgePath = '../../Klampt_Robotic_Arm_Script/accuracyDecrease/sp/4-4-4/250msx3/'
+TTptah = '../Result/Sp/250msx3/4-4-4/trueTable/'
 
 trueTable = []
 edge = []
@@ -54,7 +54,7 @@ def checkout_Truetable(i):
 	global trueTable
 
 	for k in range(0,512):#check all edge
-		for j in range(0,8192):#check all pix
+		for j in range(0,4096):#check all pix
 			trueTable[j][k] = edge[k][j]
 	pass
 
