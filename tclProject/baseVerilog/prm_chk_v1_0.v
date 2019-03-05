@@ -1,29 +1,34 @@
-
 //////////////////////////////////////////////////////////////////////////////////
-// Company:    
-// Engineer: 29505
+// Company:   
+// Engineer: Ruige_Lee
 // Create Date: 2019-02-13 11:04:50
-// Last Modified by:   29505
-// Last Modified time: 2019-02-24 22:16:56
+// Last Modified by:   Ruige_Lee
+// Last Modified time: 2019-03-05 10:16:08
 // Email: 295054118@whut.edu.cn
-// Design Name: prm_chk_v1_0.v  
-// Module Name:  
-// Project Name:  
-// Target Devices:  
-// Tool Versions:  
-// Description:  
+// Design Name:   
+// Module Name: prm_chk_v1_0
+// Project Name:   
+// Target Devices:   
+// Tool Versions:   
+// Description:   
 // 
 // Dependencies:   
 // 
 // Revision:  
-// Revision  
-// Additional Comments:   
+// Revision:    -   
+// Additional Comments:  
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+
 `timescale 1 ns / 1 ps
 
-module prm_chk_v1_0 
+module prm_chk_v1_0 # 
+	(
+		parameter XW = 4,
+		parameter YW = 5,
+		parameter ZW = 5
+	)
 	(
 		// Users to add ports here
 		input CLK,
@@ -32,12 +37,11 @@ module prm_chk_v1_0
 		input [2:0] sel1,
 		input [7:0] sel2,
 
-		input [13:0] xyzInput,
+		input [XW+YW+ZW-1:0] xyzInput,
 
-		output [3:0] x,
-		output [4:0] y,
-		output [4:0] z,
-
+		output [XW-1:0] x,
+		output [YW-1:0] y,
+		output [ZW-1:0] z,
 		input [511:0] edge_mask_512p0,
 		input [511:0] edge_mask_512p1,
 		input [511:0] edge_mask_512p2,
@@ -52,22 +56,15 @@ module prm_chk_v1_0
 
 	);
 
-
-
-	// Add user logic here
 	wire [4095:0] outputMask_Wire;
 
-
-
 	reg [4095:0] edgeResult;
-
 	reg [511:0] selReg;
-	
-	reg [13:0] slv_reg0;
+	reg [XW+YW+ZW-1:0] slv_reg0;
 
 always @(posedge CLK)begin
 if (!RST_n) begin
-    slv_reg0 <= 14'd0;
+    slv_reg0 <= {(XW+YW+ZW){1'd0}};
 end
 else begin
     slv_reg0 <= xyzInput;
