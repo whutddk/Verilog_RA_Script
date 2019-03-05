@@ -34,7 +34,7 @@ module prm_chk_v1_0 #
 		input CLK,
 		input RST_n,
 
-		input [2:0] sel1,
+		input [1:0] sel1,
 		input [7:0] sel2,
 
 		input [XW+YW+ZW-1:0] xyzInput,
@@ -46,19 +46,19 @@ module prm_chk_v1_0 #
 		input [511:0] edge_mask_512p1,
 		input [511:0] edge_mask_512p2,
 		input [511:0] edge_mask_512p3,
-		input [511:0] edge_mask_512p4,
-		input [511:0] edge_mask_512p5,
-		input [511:0] edge_mask_512p6,
-		input [511:0] edge_mask_512p7,
+//		input [511:0] edge_mask_512p4,
+//		input [511:0] edge_mask_512p5,
+//		input [511:0] edge_mask_512p6,
+//		input [511:0] edge_mask_512p7,
 
 		output [31:0] result_imp
 
 
 	);
 
-	wire [4095:0] outputMask_Wire;
+	wire [2047:0] outputMask_Wire;
 
-	reg [4095:0] edgeResult;
+	reg [2047:0] edgeResult;
 	reg [511:0] selReg;
 	reg [XW+YW+ZW-1:0] slv_reg0;
 
@@ -80,10 +80,7 @@ always @(*) begin
 		3'd1: selReg[511:0] <= edgeResult[1023:512];
 		3'd2: selReg[511:0] <= edgeResult[1535:1024];
 		3'd3: selReg[511:0] <= edgeResult[2047:1536];
-		3'd4: selReg[511:0] <= edgeResult[2559:2048];
-		3'd5: selReg[511:0] <= edgeResult[3071:2560];
-		3'd6: selReg[511:0] <= edgeResult[3583:3072];
-		3'd7: selReg[511:0] <= edgeResult[4095:3584];
+
 
 	default:selReg[511:0] <= 511'd0;
 	endcase
@@ -122,7 +119,7 @@ end
 	always @ ( posedge CLK ) begin
 
 		if ( !RST_n ) begin
-			edgeResult <= 4095'b0;
+			edgeResult <= 2048'b0;
 			// inputX <= 4'b0;
 			// inputY <= 5'b0;
 			// inputZ <= 5'b0;
@@ -135,7 +132,9 @@ end
 	end // always @ ( posedge S_AXI_ACLK )
 
 
-assign outputMask_Wire = {edge_mask_512p7,edge_mask_512p6,edge_mask_512p5,edge_mask_512p4,edge_mask_512p3,edge_mask_512p2,edge_mask_512p1,edge_mask_512p0};
+//assign outputMask_Wire = {edge_mask_512p7,edge_mask_512p6,edge_mask_512p5,edge_mask_512p4,edge_mask_512p3,edge_mask_512p2,edge_mask_512p1,edge_mask_512p0};
+assign outputMask_Wire = {edge_mask_512p3,edge_mask_512p2,edge_mask_512p1,edge_mask_512p0};
+
 assign {x,y,z} = slv_reg0;
 
 

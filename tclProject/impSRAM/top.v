@@ -3,7 +3,7 @@
 // Engineer: Ruige_Lee
 // Create Date: 2019-03-05 09:59:40
 // Last Modified by:   Ruige_Lee
-// Last Modified time: 2019-03-05 16:29:53
+// Last Modified time: 2019-03-05 17:42:41
 // Email: 295054118@whut.edu.cn
 // Design Name:   
 // Module Name: top
@@ -27,14 +27,14 @@ module top (
 	input CLK,
 	input [1:0] sel1,
 	input [7:0] sel2,
-	input [11:0] xyzInput,
+	input [13:0] xyzInput,
 
 	output [31:0] result_imp,
 
 ////////////////////////////////
 	
-	
-
+	input init_enable,
+	input [31:0] init_data,
 //sram port
 
 	input mode_set,
@@ -52,45 +52,65 @@ wire [3:0] X_Wire;
 wire [3:0] Y_Wire;
 wire [3:0] Z_Wire;
 
-wire [2047:0] edge_mask;
+wire [127:0] edge_mask;
 
 
 wire [127:0] SRAM_DATA_IN_Pin;
 wire [127:0] SRAM_DATA_OUT_Pin;
 
-assign i_SRAM_DATA = (mode_set == 1'b1) ? 127'bz : SRAM_DATA_IN_Pin; //read mode ? 
+assign i_SRAM_DATA = (mode_set == 1'b1) ? 128'bz : SRAM_DATA_IN_Pin; //read mode ? 
 assign SRAM_DATA_OUT_Pin = i_SRAM_DATA;
+
+wire [18:0] sram_addr_sel;
+wire [3:0] data_sel;
+wire [18:0] prm_addr = {X_Wire,Y_Wire,Z_Wire,1'b0,data_sel};
+wire [18:0] init_addr;
+
+assign sram_addr_sel = (init_enable == 1'b1) ? init_addr : prm_addr;
 
 
 
 prm_chk_v1_0 i_prm_sel
-	(
-		.CLK(CLK),
-		.RST_n(1'b1),
+(
+	.CLK(CLK),
+	.RST_n(1'b1),
 
-		.sel1(sel1),
-		.sel2(sel2),
+	.sel1(sel1),
+	.sel2(sel2),
 
-		.xyzInput(xyzInput),
+	.xyzInput(xyzInput),
 
-		.x(X_Wire),
-		.y(Y_Wire),
-		.z(Z_Wire),
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
 
-		.edge_mask(edge_mask),
+	.data_sel(data_sel),
 
-		.result_imp(result_imp)
+	.edge_mask(edge_mask),
 
-	);
+	.result_imp(result_imp)
+
+);
+
+
+
+wire [127:0] sram_data_init;
+
+sram_init i_sram_init(
+	.CLK(CLK),    // Clock
+	.RSTn(1'b1),  // Asynchronous reset active low
+	
+	.enable(init_enable),
+	.data(init_data),
+
+	.SRAM_ADDR_Stream(init_addr),
+	.SRAM_DATA_IN_Stream(sram_data_init)
+);
 
 
 
 genvar i;
 generate 
-
-
-
-
 
 for ( i = 0; i < 4 ;i=i+1 )  begin
 
@@ -101,12 +121,12 @@ perip_SRAM # (
 	i_sram
 	( 
 		.CLK(CLK),
-		.RSTn(RSTn),
+		.RSTn(1'b1),
 
 		.mode_R1_W0(i_mode),
-		.SRAM_ADDR_Stream,
-		.SRAM_DATA_IN_Stream,
-		.SRAM_DATA_OUT_Stream,
+		.SRAM_ADDR_Stream(sram_addr_sel),
+		.SRAM_DATA_IN_Stream(sram_data_init[32*i+31:32*i]),
+		.SRAM_DATA_OUT_Stream(edge_mask[32*i+31:32*i]),
 
 
 		//driver pin

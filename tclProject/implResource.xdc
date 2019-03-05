@@ -1,5 +1,5 @@
-set_property -dict {PACKAGE_PIN U20 IOSTANDARD LVCMOS33} [get_ports CLK];
-create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports CLK];
+set_property -dict {PACKAGE_PIN W19 IOSTANDARD LVCMOS33} [get_ports CLK]
+create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports CLK]
 
 
 
@@ -53,14 +53,11 @@ set_property IOSTANDARD LVCMOS33 [get_ports {xyzInput[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {xyzInput[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {xyzInput[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {xyzInput[0]}]
-set_property PACKAGE_PIN U20 [get_ports CLK]
-set_property IOSTANDARD LVCMOS33 [get_ports CLK]
 set_property PACKAGE_PIN Y21 [get_ports {result_imp[31]}]
 set_property PACKAGE_PIN Y22 [get_ports {result_imp[30]}]
 set_property PACKAGE_PIN AB21 [get_ports {result_imp[29]}]
 set_property PACKAGE_PIN AB22 [get_ports {result_imp[28]}]
 set_property PACKAGE_PIN V20 [get_ports {result_imp[27]}]
-set_property PACKAGE_PIN W19 [get_ports {result_imp[26]}]
 set_property PACKAGE_PIN W20 [get_ports {result_imp[25]}]
 set_property PACKAGE_PIN Y18 [get_ports {result_imp[24]}]
 set_property PACKAGE_PIN Y19 [get_ports {result_imp[23]}]
@@ -119,3 +116,5 @@ set_property IOSTANDARD LVCMOS33 [get_ports {result_imp[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {result_imp[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {result_imp[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {result_imp[0]}]
+
+set_property PACKAGE_PIN U20 [get_ports {result_imp[26]}]

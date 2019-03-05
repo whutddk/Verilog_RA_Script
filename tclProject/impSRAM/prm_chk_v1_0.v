@@ -3,7 +3,7 @@
 // Engineer: Ruige_Lee
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   Ruige_Lee
-// Last Modified time: 2019-03-05 11:01:58
+// Last Modified time: 2019-03-05 17:44:12
 // Email: 295054118@whut.edu.cn
 // Design Name:   
 // Module Name: prm_chk_v1_0
@@ -29,30 +29,33 @@ module prm_chk_v1_0
 		input CLK,
 		input RST_n,
 
-		input [2:0] sel1,
+		input [1:0] sel1,
 		input [7:0] sel2,
 
-		input [11:0] xyzInput,
+		input [13:0] xyzInput,
 
-		output [2:0] x,
-		output [3:0] y,
-		output [3:0] z,
-		input [4095:0] edge_mask,
+		output [3:0] x,
+		output [4:0] y,
+		output [4:0] z,
+
+		output [3:0] data_sel,
+
+		input [127:0] edge_mask,
 
 		output [31:0] result_imp
 
 
 	);
 
-	wire [4095:0] outputMask_Wire;
-
-	reg [4095:0] edgeResult;
+	reg [2047:0] edgeResult;
 	reg [511:0] selReg;
-	reg [11:0] slv_reg0;
+	reg [14:0] slv_reg0;
+
+
 
 always @(posedge CLK)begin
 if (!RST_n) begin
-    slv_reg0 <= {(11){1'd0}};
+    slv_reg0 <= 14'd0;
 end
 else begin
     slv_reg0 <= xyzInput;
@@ -68,10 +71,6 @@ always @(*) begin
 		3'd1: selReg[511:0] <= edgeResult[1023:512];
 		3'd2: selReg[511:0] <= edgeResult[1535:1024];
 		3'd3: selReg[511:0] <= edgeResult[2047:1536];
-		3'd4: selReg[511:0] <= edgeResult[2559:2048];
-		3'd5: selReg[511:0] <= edgeResult[3071:2560];
-		3'd6: selReg[511:0] <= edgeResult[3583:3072];
-		3'd7: selReg[511:0] <= edgeResult[4095:3584];
 
 	default:selReg[511:0] <= 511'd0;
 	endcase
@@ -107,20 +106,46 @@ end
 
 
 
+
+reg [3:0] data_sel_reg; 
+reg [2047:0] fix_edgeMask;
 	always @ ( posedge CLK ) begin
 
 		if ( !RST_n ) begin
-			edgeResult <= 4095'b0;
+			edgeResult <= 2048'b0;
+			data_sel_reg <= 4'd0;
+			fix_edgeMask <= 2048'b0;
 		end
 
 		else begin
-			edgeResult <= edgeResult | outputMask_Wire;
+			if (data_sel_reg == 4'd0) begin
+				data_sel_reg <= data_sel_reg + 4'd1;
+				fix_edgeMask <= {1920'b0,edge_mask};
+				edgeResult <= edgeResult | fix_edgeMask;
+
+
+			end
+			else if (data_sel_reg == 4'd15) begin
+				data_sel_reg <= 4'd0;
+				fix_edgeMask <= (fix_edgeMask << 128) | edge_mask;
+				edgeResult <= edgeResult;
+
+			end
+			else begin
+				data_sel_reg <= data_sel_reg + 4'd1;
+				fix_edgeMask <= (fix_edgeMask << 128) | edge_mask;
+				edgeResult <= edgeResult;
+
+			end
+
+			
 
 		end
 	end
 
 
-assign outputMask_Wire = edge_mask;
+assign data_sel = data_sel_reg;
+
 assign {x,y,z} = slv_reg0;
 
 
