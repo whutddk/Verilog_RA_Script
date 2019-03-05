@@ -3,7 +3,7 @@
 // Engineer: Ruige_Lee
 // Create Date: 2019-02-13 11:04:50
 // Last Modified by:   Ruige_Lee
-// Last Modified time: 2019-03-05 10:16:08
+// Last Modified time: 2019-03-05 13:45:18
 // Email: 295054118@whut.edu.cn
 // Design Name:   
 // Module Name: prm_chk_v1_0
@@ -137,6 +137,9 @@ end
 
 assign outputMask_Wire = {edge_mask_512p7,edge_mask_512p6,edge_mask_512p5,edge_mask_512p4,edge_mask_512p3,edge_mask_512p2,edge_mask_512p1,edge_mask_512p0};
 assign {x,y,z} = slv_reg0;
+
+
+
 
 
 

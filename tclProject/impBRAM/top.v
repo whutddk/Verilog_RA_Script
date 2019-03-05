@@ -25,18 +25,18 @@
 module top (
 
 	input CLK,
-	input [2:0] sel1,
+	input [1:0] sel1,
 	input [7:0] sel2,
 	input [11:0] xyzInput,
 
 	output [31:0] result_imp
 );
 
-wire [2:0] X_Wire;
+wire [3:0] X_Wire;
 wire [3:0] Y_Wire;
 wire [3:0] Z_Wire;
 
-wire [4095:0] edge_mask;
+wire [2047:0] edge_mask;
 
 
 blk_mem_gen_0 rom (
