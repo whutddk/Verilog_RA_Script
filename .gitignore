@@ -8,3 +8,6 @@ Klampt/truetable/resoure/singleVerilog/debug.log
 *.aux
 paper/tex/FPGA-based Design of Real-time Robot Motion Planning.pdf
 paper/tex/format/format.pdf
+*.jou
+*.rpt
+*.dcp
