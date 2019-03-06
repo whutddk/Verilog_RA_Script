@@ -1,7 +1,7 @@
 # @Author: Internet:blog https://www.cnblogs.com/hfyfpga/p/4396103.html
 # @Date:   2019-03-04 20:22:46
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-06 12:01:57
+# @Last Modified time: 2019-03-06 14:19:55
 
 
 
@@ -11,7 +11,7 @@ set outputDir .
 
 #setup design sources and constraints
 
-read_verilog  [ glob ../../Result/3-4-4/verilog/*.v ]                				
+read_verilog  [ glob ../baseVerilog/*.v ]                				
 read_verilog  [ glob ../../Result/3-4-4/verilog/*.v ]  
 
 
@@ -44,7 +44,7 @@ report_route_status -file $outputDir/post_route_status.rpt
 report_timing_summary -file $outputDir/post_route_timing_summary.rpt
 report_power -file $outputDir/post_route_power.rpt					
 report_drc -file $outputDir/post_imp_drc.rpt    
-
+report_utilization -file $outputDir/post_synth_util.rpt 
 
   
 

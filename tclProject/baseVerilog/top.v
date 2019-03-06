@@ -20,9 +20,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`define XW 4
-`define YW 5
-`define ZW 5
+`define XW 3
+`define YW 4
+`define ZW 4
 
 module top (
 
