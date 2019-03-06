@@ -1,7 +1,7 @@
 # @Author: Internet:blog https://www.cnblogs.com/hfyfpga/p/4396103.html
 # @Date:   2019-03-04 20:22:46
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-03-05 10:08:22
+# @Last Modified time: 2019-03-06 12:01:57
 
 
 
@@ -11,15 +11,15 @@ set outputDir .
 
 #setup design sources and constraints
 
-read_verilog  [ glob ../../Result/Ca/250msx3/3-4-4/verilog/*.v ]                				
-read_verilog  [ glob ../../Result/Ca/250msx3/3-4-4/verilog/*.v ]  
+read_verilog  [ glob ../../Result/3-4-4/verilog/*.v ]                				
+read_verilog  [ glob ../../Result/3-4-4/verilog/*.v ]  
 
 
-read_xdc [ glob ./CONSTRS/*.xdc ]
+read_xdc [ glob ../*.xdc ]
 
 # run synthesis, write design checkpoint, report timing,
 # and utilization estimates
-synth_design -top prm_LUTX1_Ca_3_4_4_chk512p0       \
+synth_design -top top       \
              -part xc7a200tfbg484-3  \
              -fanout_limit 10000     \
              -shreg_min_size 3      \

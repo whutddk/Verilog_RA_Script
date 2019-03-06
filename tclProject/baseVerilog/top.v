@@ -48,58 +48,61 @@ wire [511:0] edge_mask_512p5;
 wire [511:0] edge_mask_512p6;
 wire [511:0] edge_mask_512p7;
 
-wire [`XW-1 : 0] bufg_XWire_Out;
-wire [`YW-1 : 0] bufg_YWire_Out;
-wire [`ZW-1 : 0] bufg_ZWire_Out;
-
-prm_LUTX1_Ca_4_5_5_chk512p0(
-	.x(bufg_XWire_Out),
-	.y(bufg_YWire_Out),
-	.z(bufg_ZWire_Out),
+prm_LUTX1_Po_3_4_4_chk512p0(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
 	.edge_mask_512p0(edge_mask_512p0)
 );
 
-prm_LUTX1_Ca_4_5_5_chk512p1(
-	.x(bufg_XWire_Out),
-	.y(bufg_YWire_Out),
-	.z(bufg_ZWire_Out),
+prm_LUTX1_Po_3_4_4_chk512p1(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
 	.edge_mask_512p1(edge_mask_512p1)
 );
 
-prm_LUTX1_Ca_4_5_5_chk512p2(
-	.x(bufg_XWire_Out),
-	.y(bufg_YWire_Out),
-	.z(bufg_ZWire_Out),
+prm_LUTX1_Po_3_4_4_chk512p2(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
 	.edge_mask_512p2(edge_mask_512p2)
 );
 
-prm_LUTX1_Ca_4_5_5_chk512p3(
-	.x(bufg_XWire_Out),
-	.y(bufg_YWire_Out),
-	.z(bufg_ZWire_Out),
+prm_LUTX1_Po_3_4_4_chk512p3(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
 	.edge_mask_512p3(edge_mask_512p3)
 );
 
+prm_LUTX1_Po_3_4_4_chk512p4(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
+	.edge_mask_512p4(edge_mask_512p4)
+);
 
+prm_LUTX1_Po_3_4_4_chk512p5(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
+	.edge_mask_512p5(edge_mask_512p5)
+);
 
-wire [`XW+`YW+`ZW-1 : 0] bufg_Wire_In = {X_Wire,Y_Wire,Z_Wire};
-wire [`XW+`YW+`ZW-1 : 0] bufg_Wire_Out;
+prm_LUTX1_Po_3_4_4_chk512p6(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
+	.edge_mask_512p6(edge_mask_512p6)
+);
 
-
-
-
-
-assign {bufg_XWire_Out,bufg_YWire_Out,bufg_ZWire_Out} = bufg_Wire_Out;
-
-genvar i;
-generate 
-for ( i = 0; i < (`XW+`YW+`ZW);i=i+1 )  begin
-BUFG BUFG_inst (
-      .O(bufg_Wire_Out[i]), // 1-bit output: Clock output
-      .I(bufg_Wire_In[i])  // 1-bit input: Clock input
-   );
-end
-endgenerate
+prm_LUTX1_Po_3_4_4_chk512p7(
+	.x(X_Wire),
+	.y(Y_Wire),
+	.z(Z_Wire),
+	.edge_mask_512p7(edge_mask_512p7)
+);
 
 
 
@@ -125,10 +128,10 @@ prm_chk_v1_0  # (
 		.edge_mask_512p1(edge_mask_512p1),
 		.edge_mask_512p2(edge_mask_512p2),
 		.edge_mask_512p3(edge_mask_512p3),
-//		.edge_mask_512p4(edge_mask_512p4),
-//		.edge_mask_512p5(edge_mask_512p5),
-//		.edge_mask_512p6(edge_mask_512p6),
-//		.edge_mask_512p7(edge_mask_512p7),
+		.edge_mask_512p4(edge_mask_512p4),
+		.edge_mask_512p5(edge_mask_512p5),
+		.edge_mask_512p6(edge_mask_512p6),
+		.edge_mask_512p7(edge_mask_512p7),
 
 		.result_imp(result_imp)
 
