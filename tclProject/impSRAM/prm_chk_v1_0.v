@@ -29,7 +29,7 @@ module prm_chk_v1_0
 		input CLK,
 		input RST_n,
 
-		input [1:0] sel1,
+		input [2:0] sel1,
 		input [7:0] sel2,
 
 		input [13:0] xyzInput,
@@ -47,7 +47,7 @@ module prm_chk_v1_0
 
 	);
 
-	reg [2047:0] edgeResult;
+	reg [4095:0] edgeResult;
 	reg [511:0] selReg;
 	reg [14:0] slv_reg0;
 
@@ -71,7 +71,10 @@ always @(*) begin
 		3'd1: selReg[511:0] <= edgeResult[1023:512];
 		3'd2: selReg[511:0] <= edgeResult[1535:1024];
 		3'd3: selReg[511:0] <= edgeResult[2047:1536];
-
+		3'd4: selReg[511:0] <= edgeResult[2559:2048];
+		3'd5: selReg[511:0] <= edgeResult[3071:2560];
+		3'd6: selReg[511:0] <= edgeResult[3583:3072];
+		3'd7: selReg[511:0] <= edgeResult[4095:3584];
 	default:selReg[511:0] <= 511'd0;
 	endcase
 end
@@ -107,32 +110,32 @@ end
 
 
 
-reg [3:0] data_sel_reg; 
-reg [2047:0] fix_edgeMask;
+reg [4:0] data_sel_reg; 
+reg [4095:0] fix_edgeMask;
 	always @ ( posedge CLK ) begin
 
 		if ( !RST_n ) begin
-			edgeResult <= 2048'b0;
-			data_sel_reg <= 4'd0;
-			fix_edgeMask <= 2048'b0;
+			edgeResult <= 4096'b0;
+			data_sel_reg <= 5'd0;
+			fix_edgeMask <= 4096'b0;
 		end
 
 		else begin
-			if (data_sel_reg == 4'd0) begin
-				data_sel_reg <= data_sel_reg + 4'd1;
-				fix_edgeMask <= {1920'b0,edge_mask};
+			if (data_sel_reg == 5'd0) begin
+				data_sel_reg <= data_sel_reg + 5'd1;
+				fix_edgeMask <= {3968'b0,edge_mask};
 				edgeResult <= edgeResult | fix_edgeMask;
 
 
 			end
-			else if (data_sel_reg == 4'd15) begin
-				data_sel_reg <= 4'd0;
+			else if (data_sel_reg == 5'd31) begin
+				data_sel_reg <= 5'd0;
 				fix_edgeMask <= (fix_edgeMask << 128) | edge_mask;
 				edgeResult <= edgeResult;
 
 			end
 			else begin
-				data_sel_reg <= data_sel_reg + 4'd1;
+				data_sel_reg <= data_sel_reg + 5'd1;
 				fix_edgeMask <= (fix_edgeMask << 128) | edge_mask;
 				edgeResult <= edgeResult;
 

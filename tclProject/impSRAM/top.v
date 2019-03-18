@@ -25,7 +25,7 @@
 module top (
 
 	input CLK,
-	input [1:0] sel1,
+	input [2:0] sel1,
 	input [7:0] sel2,
 	input [13:0] xyzInput,
 
