@@ -28,26 +28,26 @@ module sram_init (
 	input [31:0] data,
 
 	output reg [18:0] SRAM_ADDR_Stream,
-	output reg [127:0] SRAM_DATA_IN_Stream
+	output reg [95:0] SRAM_DATA_IN_Stream
 );
 
 reg [1:0] selCnt;
-reg [127:0] data_out;
+reg [95:0] data_out;
 
 always @(posedge CLK)begin
 
 	if (!RSTn) begin
 		SRAM_ADDR_Stream <= 19'b0;
-		SRAM_DATA_IN_Stream  <= 128'b0;
+		SRAM_DATA_IN_Stream  <= 96'b0;
 		selCnt <= 2'b0;
-		data_out <= 128'd0;
+		data_out <= 96'd0;
 	end
 	else begin
 		if ( enable == 1'b0 ) begin 
 			SRAM_ADDR_Stream <= 19'b0;
-			SRAM_DATA_IN_Stream  <= 128'b0;
+			SRAM_DATA_IN_Stream  <= 96'b0;
 			selCnt <= 2'b0;
-			data_out <= 128'd0;
+			data_out <= 96'd0;
 		end
 
 		else begin
@@ -57,7 +57,7 @@ always @(posedge CLK)begin
 					selCnt <= 2'b01;
 					SRAM_ADDR_Stream <= SRAM_ADDR_Stream;
 					SRAM_DATA_IN_Stream <= data_out;
-					data_out <= ({96'b0,data});
+					data_out <= ({64'b0,data});
 				end
 				2'b01:begin
 					selCnt <= 2'b10;
@@ -65,13 +65,13 @@ always @(posedge CLK)begin
 					SRAM_DATA_IN_Stream <= SRAM_DATA_IN_Stream;
 					data_out <= (data_out << 32 | (data));
 				end
+//				2'b10:begin
+//					selCnt <= 2'b11;
+//					SRAM_ADDR_Stream <= SRAM_ADDR_Stream;
+//					SRAM_DATA_IN_Stream <= SRAM_DATA_IN_Stream;
+//					data_out <= (data_out << 32 | (data));
+//				end
 				2'b10:begin
-					selCnt <= 2'b11;
-					SRAM_ADDR_Stream <= SRAM_ADDR_Stream;
-					SRAM_DATA_IN_Stream <= SRAM_DATA_IN_Stream;
-					data_out <= (data_out << 32 | (data));
-				end
-				2'b11:begin
 					selCnt <= 2'b00;
 					SRAM_ADDR_Stream <= SRAM_ADDR_Stream + 19'd1;
 					SRAM_DATA_IN_Stream <= SRAM_DATA_IN_Stream;

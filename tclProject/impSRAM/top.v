@@ -40,11 +40,11 @@ module top (
 	input mode_set,
 	output i_mode,
 
-	output [3:0] i_SRAM_WR,
-	output [3:0] i_SRAM_CS,
+	output [2:0] i_SRAM_WR,
+	output [2:0] i_SRAM_CS,
 
 	output [18:0] i_SRAM_ADDR,
-	inout [127:0] i_SRAM_DATA
+	inout [95:0] i_SRAM_DATA
 
 );
 
@@ -52,13 +52,13 @@ wire [3:0] X_Wire;
 wire [4:0] Y_Wire;
 wire [4:0] Z_Wire;
 
-wire [127:0] edge_mask;
+wire [95:0] edge_mask;
 
 
-wire [127:0] SRAM_DATA_IN_Pin;
-wire [127:0] SRAM_DATA_OUT_Pin;
+wire [95:0] SRAM_DATA_IN_Pin;
+wire [95:0] SRAM_DATA_OUT_Pin;
 
-assign i_SRAM_DATA = (mode_set == 1'b1) ? 128'bz : SRAM_DATA_IN_Pin; //read mode ? 
+assign i_SRAM_DATA = (mode_set == 1'b1) ? 96'bz : SRAM_DATA_IN_Pin; //read mode ? 
 assign SRAM_DATA_OUT_Pin = i_SRAM_DATA;
 
 wire [18:0] sram_addr_sel;
@@ -94,7 +94,7 @@ prm_chk_v1_0 i_prm_sel
 
 
 
-wire [127:0] sram_data_init;
+wire [95:0] sram_data_init;
 
 sram_init i_sram_init(
 	.CLK(CLK),    // Clock
@@ -112,7 +112,7 @@ assign i_mode = mode_set;
 genvar i;
 generate 
 
-for ( i = 0; i < 4 ;i=i+1 )  begin
+for ( i = 0; i < 3 ;i=i+1 )  begin
 
 perip_SRAM # (
 	.ADDRW(19),
