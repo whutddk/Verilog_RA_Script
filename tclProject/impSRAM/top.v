@@ -49,8 +49,8 @@ module top (
 );
 
 wire [3:0] X_Wire;
-wire [3:0] Y_Wire;
-wire [3:0] Z_Wire;
+wire [4:0] Y_Wire;
+wire [4:0] Z_Wire;
 
 wire [127:0] edge_mask;
 
@@ -107,7 +107,7 @@ sram_init i_sram_init(
 	.SRAM_DATA_IN_Stream(sram_data_init)
 );
 
-
+assign i_mode = mode_set;
 
 genvar i;
 generate 

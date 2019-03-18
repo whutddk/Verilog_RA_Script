@@ -38,7 +38,7 @@ module prm_chk_v1_0
 		output [4:0] y,
 		output [4:0] z,
 
-		output [3:0] data_sel,
+		output [4:0] data_sel,
 
 		input [127:0] edge_mask,
 
