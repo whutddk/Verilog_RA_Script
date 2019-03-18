@@ -1,7 +1,7 @@
 Copyright 1986-2018 Xilinx, Inc. All Rights Reserved.
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 | Tool Version : Vivado v.2018.3 (win64) Build 2405991 Thu Dec  6 23:38:27 MST 2018
-| Date         : Mon Mar 18 11:58:51 2019
+| Date         : Mon Mar 18 14:03:47 2019
 | Host         : DESKTOP-WHUT running 64-bit major release  (build 9200)
 | Command      : report_utilization -file M:/MAS2/PRM_Robotic_Arm/Verilog_RA_Script/tclProject/impSRAM/UTILIZATION_reportx4.txt -name utilization_1
 | Design       : top

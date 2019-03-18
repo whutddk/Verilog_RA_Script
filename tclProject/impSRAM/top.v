@@ -62,8 +62,8 @@ assign i_SRAM_DATA = (mode_set == 1'b1) ? 128'bz : SRAM_DATA_IN_Pin; //read mode
 assign SRAM_DATA_OUT_Pin = i_SRAM_DATA;
 
 wire [18:0] sram_addr_sel;
-wire [3:0] data_sel;
-wire [18:0] prm_addr = {X_Wire,Y_Wire,Z_Wire,1'b0,data_sel};
+wire [4:0] data_sel;
+wire [18:0] prm_addr = {X_Wire,Y_Wire,Z_Wire,data_sel};
 wire [18:0] init_addr;
 
 assign sram_addr_sel = (init_enable == 1'b1) ? init_addr : prm_addr;

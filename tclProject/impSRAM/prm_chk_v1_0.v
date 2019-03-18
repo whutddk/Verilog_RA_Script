@@ -49,7 +49,7 @@ module prm_chk_v1_0
 
 	reg [4095:0] edgeResult;
 	reg [511:0] selReg;
-	reg [14:0] slv_reg0;
+	reg [13:0] slv_reg0;
 
 
 
