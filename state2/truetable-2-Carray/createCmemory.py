@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-07-13 11:05:55
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-07-13 14:35:34
+# @Last Modified time: 2019-07-13 17:08:30
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 import sys
@@ -19,7 +19,7 @@ TempTrueTable = [[],[],[],[],[],[],[]]
 
 edgeNum = 8192
 gridNum = 16384
-wordNum = 8192 / 32
+wordNum = 8192 // 32
 
 wordtable = []
 
@@ -68,51 +68,47 @@ def mixInwords():
 
 
 
-# def write_Cfile():
-# 	global trueTable
-# 	nowtime = time.localtime(time.time())
+def write_Cfile():
+	global trueTable
+	nowtime = time.localtime(time.time())
 
-# 	with open('./CMemoryTable.c','w') as CFile:
+	with open('./CMemoryTable.c','w') as CFile:
 
-# 		strSyntax = '/*******************************************\n'
-# 		strSyntax = strSyntax + '****** Wuhan University of Technology ******\n'
-# 		strSyntax = strSyntax + '****** Ruige Lee ******\n'
-# 		strSyntax = strSyntax + 'year: ' + str(nowtime.tm_year) + '\n'
-# 		strSyntax = strSyntax + 'month: ' + str(nowtime.tm_mon) + '\n'
-# 		strSyntax = strSyntax + 'date: ' + str(nowtime.tm_mday) + '\n'
-# 		strSyntax = strSyntax + 'hour: ' + str(nowtime.tm_hour) + '\n'
-# 		strSyntax = strSyntax + 'minutes: ' + str(nowtime.tm_min) + '\n'
-# 		strSyntax = strSyntax + 'second: ' + str(nowtime.tm_sec) + '\n'
-# 		strSyntax = strSyntax + '********************************************/\n\n'
+		strSyntax = '/*******************************************\n'
+		strSyntax = strSyntax + '****** Wuhan University of Technology ******\n'
+		strSyntax = strSyntax + '****** Ruige Lee ******\n'
+		strSyntax = strSyntax + 'year: ' + str(nowtime.tm_year) + '\n'
+		strSyntax = strSyntax + 'month: ' + str(nowtime.tm_mon) + '\n'
+		strSyntax = strSyntax + 'date: ' + str(nowtime.tm_mday) + '\n'
+		strSyntax = strSyntax + 'hour: ' + str(nowtime.tm_hour) + '\n'
+		strSyntax = strSyntax + 'minutes: ' + str(nowtime.tm_min) + '\n'
+		strSyntax = strSyntax + 'second: ' + str(nowtime.tm_sec) + '\n'
+		strSyntax = strSyntax + '********************************************/\n\n'
 
 
-# 		strSyntax = strSyntax + 'uint32_t lookUpTrueTable[16384]['+str(wordNum)+'] = {\n'
-# 		CFile.write(strSyntax)
-# 		for grid in range(0,gridNum):	#all case all grid  16384
+		strSyntax = strSyntax + 'uint32_t lookUpTrueTable[16384]['+str(wordNum)+'] = {\n'
+		CFile.write(strSyntax)
+		
+		for grid in range(0,gridNum):	#all case all grid  16384
+			strSyntax = '	'
+			strSyntax = strSyntax + '{'
+			for edge in wordtable[grid]:
+				
+				strSyntax = strSyntax + edge + ','
 
-# 			edgeCnt = 0
-# 			for part in range(0,7): # all edge
-# 				strSyntax = '{'
-# 				for edge in trueTable[part][grid]:
-# 					edgeCnt = edgeCnt + 1
-
-# 					result = ''
-# 					for i in range(0,32):
-# 						result = result + str(edge)
-# 					hexTable = hex(int(result,2)) + ','
-# 					strSyntax = strSyntax + hexTable
-
-# 			strSyntax = strSyntax[:-1] + "}\n"
-# 			CFile.write(strSyntax)
-
-# 		CFile.write('};\n')
+			strSyntax = strSyntax[:-1] + "},\n"
+			CFile.write(strSyntax)
+			# print (strSyntax)
+			
+		strSyntax = '};\n'
+		CFile.write(strSyntax)
 
 			
 
 
 load_trueTable()
 mixInwords()
-# write_Cfile()
+write_Cfile()
 print ('done!')
 
 
