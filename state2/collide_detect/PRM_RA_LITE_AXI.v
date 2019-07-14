@@ -3,7 +3,7 @@
 // Engineer: Ruige_Lee
 // Create Date: 2019-04-16 17:26:02
 // Last Modified by:   29505
-// Last Modified time: 2019-07-14 21:51:27
+// Last Modified time: 2019-07-14 22:18:33
 // Email: 295054118@whut.edu.cn
 // page:  
 // Design Name: PRM_RA_LITE_AXI.v  
@@ -3208,7 +3208,9 @@
 
 generate
 	genvar i;
-	assign edgeState_Wire[i] = edgeState[32*i+31:32*i];
+	for ( i = 0; i < 256; i = i + 1 ) begin
+		assign edgeState_Wire[i] = edgeState[32*i+31:32*i];
+	end
 endgenerate
 
 	// User logic ends

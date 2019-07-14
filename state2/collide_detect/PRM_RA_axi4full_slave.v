@@ -3,7 +3,7 @@
 // Engineer: 29505
 // Create Date: 2019-07-14 19:06:08
 // Last Modified by:   29505
-// Last Modified time: 2019-07-14 21:12:12
+// Last Modified time: 2019-07-14 23:24:10
 // Email: 295054118@whut.edu.cn
 // page:  
 // Design Name: PRM_RA_axi4full_slave.v  
@@ -523,17 +523,20 @@ assign mem_address = ( ( axi_awv_awr_flag ? axi_awaddr[ADDR_LSB + OPT_MEM_ADDR_B
 
 generate
 
+for ( i = 0; i < 256; i = i + 1 ) begin
 	always @( posedge S_AXI_ACLK ) begin 
-		if ( S_AXI_ARESETN == 1'b0 or clear == 1'b1 ) begin
-			for ( i = 0; i < 256; i = i + 1 ) begin
+		if ( S_AXI_ARESETN == 1'b0 || clear == 1'b1 ) begin
+			
 				oneGrid_Reg[i] <= 32'b0;
-			end	
+	
 		end
 
 		else begin
 			oneGrid_Reg[ mem_address ] <= S_AXI_WDATA;
 		end
 	end
+end
+
 
 	for ( i = 0; i < 256; i = i + 1 ) begin
 		assign oneGridState[32*i+31 : 32*i] = oneGrid_Reg[ i ];
