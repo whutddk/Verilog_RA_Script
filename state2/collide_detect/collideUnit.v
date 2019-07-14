@@ -1,4 +1,27 @@
 //////////////////////////////////////////////////////////////////////////////////
+// Company:    
+// Engineer: 29505
+// Create Date: 2019-07-14 19:06:08
+// Last Modified by:   29505
+// Last Modified time: 2019-07-14 21:51:30
+// Email: 295054118@whut.edu.cn
+// page:  
+// Design Name: collideUnit.v  
+// Module Name: collideUnit
+// Project Name:  
+// Target Devices:  
+// Tool Versions:  
+// Description:  
+// 
+// Dependencies:   
+// 
+// Revision:  
+// Revision  
+// Additional Comments:   
+// 
+// 
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 // Company:   WUT
 // Engineer: Ruige_Lee
 // Create Date: 2019-07-14 15:47:09
@@ -6,7 +29,7 @@
 // Last Modified time: 2019-07-14 16:19:43
 // Email: 295054118@whut.edu.cn
 // page: https://whutddk.github.io/
-// Design Name:   
+// Design Name: collideUnit.v  
 // Module Name: collideUnit
 // Project Name:   
 // Target Devices:   

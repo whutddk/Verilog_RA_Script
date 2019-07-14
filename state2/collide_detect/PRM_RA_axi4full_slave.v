@@ -1,4 +1,27 @@
 //////////////////////////////////////////////////////////////////////////////////
+// Company:    
+// Engineer: 29505
+// Create Date: 2019-07-14 19:06:08
+// Last Modified by:   29505
+// Last Modified time: 2019-07-14 21:12:12
+// Email: 295054118@whut.edu.cn
+// page:  
+// Design Name: PRM_RA_axi4full_slave.v  
+// Module Name: PRM_RA_axi4full_slave
+// Project Name:  
+// Target Devices:  
+// Tool Versions:  
+// Description:  
+// 
+// Dependencies:   
+// 
+// Revision:  
+// Revision  
+// Additional Comments:   
+// 
+// 
+//////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////
 // Company:   
 // Engineer: Ruige_Lee
 // Create Date: 2019-07-14 15:55:37
@@ -6,7 +29,7 @@
 // Last Modified time: 2019-07-14 16:49:37
 // Email: 295054118@whut.edu.cn
 // page: https://whutddk.github.io/
-// Design Name:   
+// Design Name: PRM_RA_axi4full_slave.v  
 // Module Name: PRM_RA_axi4full_slave
 // Project Name:   
 // Target Devices:   
@@ -98,7 +121,15 @@ module PRM_RA_axi4full_slave #
 		output wire [1 : 0] S_AXI_RRESP,// Read response. This signal indicates the status of the read transfer.
 		output wire  S_AXI_RLAST,// Read last. This signal indicates the last transfer in a read burst.
 		output wire  S_AXI_RVALID,// Read valid. This signal indicates that the channel is signaling the required read data.
-		input wire  S_AXI_RREADY// Read ready. This signal indicates that the master can accept the read data and response information.
+		input wire  S_AXI_RREADY,// Read ready. This signal indicates that the master can accept the read data and response information.
+	
+
+
+		// user 
+		input clear,
+		output [8191:0] oneGridState
+
+
 	);
 
 	// AXI4FULL signals
@@ -143,7 +174,7 @@ module PRM_RA_axi4full_slave #
 	//ADDR_LSB = 3 for 42 bits (n downto 3)
 
 	localparam integer ADDR_LSB = (C_S_AXI_DATA_WIDTH/32)+ 1;
-	localparam integer OPT_MEM_ADDR_BITS = 4;
+	localparam integer OPT_MEM_ADDR_BITS = 7;
 	localparam integer USER_NUM_MEM = 1;
 	//----------------------------------------------
 	//-- Signals for user logic memory space example
@@ -484,25 +515,30 @@ module PRM_RA_axi4full_slave #
 
 */
 
-reg [8191:0] oneGridState;
+
+reg [31:0] oneGrid_Reg[255:0];
 
 assign mem_address = ( ( axi_awv_awr_flag ? axi_awaddr[ADDR_LSB + OPT_MEM_ADDR_BITS : ADDR_LSB] : 0 ) );
 
+
 generate
 
-	for ( i = 0; i < 256 ; i = i + 1 ) begin
-
-		always @( posedge S_AXI_ACLK ) begin 
-			if( S_AXI_ARESETN == 1'b0 or clear == 1'b1) begin
-				oneGridState[ 32*i + 31 : 32*i ] <= 32'b0;
-			end
-
-			else begin
-				oneGridState[ 32*i + 31 : 32*i ] <= ;
-			end
+	always @( posedge S_AXI_ACLK ) begin 
+		if ( S_AXI_ARESETN == 1'b0 or clear == 1'b1 ) begin
+			for ( i = 0; i < 256; i = i + 1 ) begin
+				oneGrid_Reg[i] <= 32'b0;
+			end	
 		end
 
+		else begin
+			oneGrid_Reg[ mem_address ] <= S_AXI_WDATA;
+		end
 	end
+
+	for ( i = 0; i < 256; i = i + 1 ) begin
+		assign oneGridState[32*i+31 : 32*i] = oneGrid_Reg[ i ];
+	end
+
 
 endgenerate
 

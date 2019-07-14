@@ -1,27 +1,26 @@
 //////////////////////////////////////////////////////////////////////////////////
-// Company:   
+// Company:    
 // Engineer: Ruige_Lee
 // Create Date: 2019-04-16 17:26:02
-// Last Modified by:   Ruige_Lee
-// Last Modified time: 2019-07-14 16:19:49
+// Last Modified by:   29505
+// Last Modified time: 2019-07-14 21:51:27
 // Email: 295054118@whut.edu.cn
-// page: https://whutddk.github.io/
-// Design Name:   
+// page:  
+// Design Name: PRM_RA_LITE_AXI.v  
 // Module Name: PRM_RA_LITE_AXI
-// Project Name:   
-// Target Devices:   
-// Tool Versions:   
-// Description:   
+// Project Name:  
+// Target Devices:  
+// Tool Versions:  
+// Description:  
 // 
 // Dependencies:   
 // 
 // Revision:  
-// Revision:    -   
-// Additional Comments:  
+// Revision  
+// Additional Comments:   
 // 
-//
+// 
 //////////////////////////////////////////////////////////////////////////////////
-
 
 `timescale 1 ns / 1 ps
 
@@ -40,6 +39,9 @@
 	)
 	(
 		// Users to add ports here
+
+		output clear,
+		input [8191:0] edgeState,
 
 		// User ports ends
 		// Do not modify the ports beyond this line
@@ -106,6 +108,8 @@
 		input S_AXI_RREADY
 	);
 
+
+	wire [31:0] edgeState_Wire[255:0];
 
 	// AXI4LITE signals
 	reg [C_S_AXI_ADDR_WIDTH-1 : 0] 	axi_awaddr;
@@ -2915,268 +2919,268 @@
 	always @(*)
 	begin
 		  // Address decoding for reading registers
-		  case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
+		  // case ( axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB] )
+		  	reg_data_out <= edgeState_Wire[axi_araddr[ADDR_LSB+OPT_MEM_ADDR_BITS:ADDR_LSB]];
+			// 8'h00   : reg_data_out <= slv_reg0;
+			// 8'h01   : reg_data_out <= slv_reg1;
+			// 8'h02   : reg_data_out <= slv_reg2;
+			// 8'h03   : reg_data_out <= slv_reg3;
+			// 8'h04   : reg_data_out <= slv_reg4;
+			// 8'h05   : reg_data_out <= slv_reg5;
 
-			8'h00   : reg_data_out <= slv_reg0;
-			8'h01   : reg_data_out <= slv_reg1;
-			8'h02   : reg_data_out <= slv_reg2;
-			8'h03   : reg_data_out <= slv_reg3;
-			8'h04   : reg_data_out <= slv_reg4;
-			8'h05   : reg_data_out <= slv_reg5;
+			// 8'h06   : reg_data_out <= slv_reg6;
+			// 8'h07   : reg_data_out <= slv_reg7;
+			// 8'h08   : reg_data_out <= slv_reg8;
+			// 8'h09   : reg_data_out <= slv_reg9;
+			// 8'h0A   : reg_data_out <= slv_reg10;
+			// 8'h0B   : reg_data_out <= slv_reg11;
 
-			8'h06   : reg_data_out <= slv_reg6;
-			8'h07   : reg_data_out <= slv_reg7;
-			8'h08   : reg_data_out <= slv_reg8;
-			8'h09   : reg_data_out <= slv_reg9;
-			8'h0A   : reg_data_out <= slv_reg10;
-			8'h0B   : reg_data_out <= slv_reg11;
-
-			8'h0C   : reg_data_out <= slv_reg12;
-			8'h0D   : reg_data_out <= slv_reg13;
-			8'h0E   : reg_data_out <= slv_reg14;
-			8'h0F   : reg_data_out <= slv_reg15;
-			8'h10   : reg_data_out <= slv_reg16;
-			8'h11   : reg_data_out <= slv_reg17;
-			8'h12   : reg_data_out <= slv_reg18;
-			8'h13   : reg_data_out <= slv_reg19;
-			8'h14   : reg_data_out <= slv_reg20;
-			8'h15   : reg_data_out <= slv_reg21;
-			8'h16   : reg_data_out <= slv_reg22;
-			8'h17   : reg_data_out <= slv_reg23;
-			8'h18   : reg_data_out <= slv_reg24;
-			8'h19   : reg_data_out <= slv_reg25;
-			8'h1A   : reg_data_out <= slv_reg26;
-			8'h1B   : reg_data_out <= slv_reg27;
-			8'h1C   : reg_data_out <= slv_reg28;
-			8'h1D   : reg_data_out <= slv_reg29;
-			8'h1E   : reg_data_out <= slv_reg30;
-			8'h1F   : reg_data_out <= slv_reg31;
-			8'h20   : reg_data_out <= slv_reg32;
-			8'h21   : reg_data_out <= slv_reg33;
-			8'h22   : reg_data_out <= slv_reg34;
-			8'h23   : reg_data_out <= slv_reg35;
-			8'h24   : reg_data_out <= slv_reg36;
-			8'h25   : reg_data_out <= slv_reg37;
-			8'h26   : reg_data_out <= slv_reg38;
-			8'h27   : reg_data_out <= slv_reg39;
-			8'h28   : reg_data_out <= slv_reg40;
-			8'h29   : reg_data_out <= slv_reg41;
-			8'h2A   : reg_data_out <= slv_reg42;
-			8'h2B   : reg_data_out <= slv_reg43;
-			8'h2C   : reg_data_out <= slv_reg44;
-			8'h2D   : reg_data_out <= slv_reg45;
-			8'h2E   : reg_data_out <= slv_reg46;
-			8'h2F   : reg_data_out <= slv_reg47;
-			8'h30   : reg_data_out <= slv_reg48;
-			8'h31   : reg_data_out <= slv_reg49;
-			8'h32   : reg_data_out <= slv_reg50;
-			8'h33   : reg_data_out <= slv_reg51;
-			8'h34   : reg_data_out <= slv_reg52;
-			8'h35   : reg_data_out <= slv_reg53;
-			8'h36   : reg_data_out <= slv_reg54;
-			8'h37   : reg_data_out <= slv_reg55;
-			8'h38   : reg_data_out <= slv_reg56;
-			8'h39   : reg_data_out <= slv_reg57;
-			8'h3A   : reg_data_out <= slv_reg58;
-			8'h3B   : reg_data_out <= slv_reg59;
-			8'h3C   : reg_data_out <= slv_reg60;
-			8'h3D   : reg_data_out <= slv_reg61;
-			8'h3E   : reg_data_out <= slv_reg62;
-			8'h3F   : reg_data_out <= slv_reg63;
-			8'h40   : reg_data_out <= slv_reg64;
-			8'h41   : reg_data_out <= slv_reg65;
-			8'h42   : reg_data_out <= slv_reg66;
-			8'h43   : reg_data_out <= slv_reg67;
-			8'h44   : reg_data_out <= slv_reg68;
-			8'h45   : reg_data_out <= slv_reg69;
-			8'h46   : reg_data_out <= slv_reg70;
-			8'h47   : reg_data_out <= slv_reg71;
-			8'h48   : reg_data_out <= slv_reg72;
-			8'h49   : reg_data_out <= slv_reg73;
-			8'h4A   : reg_data_out <= slv_reg74;
-			8'h4B   : reg_data_out <= slv_reg75;
-			8'h4C   : reg_data_out <= slv_reg76;
-			8'h4D   : reg_data_out <= slv_reg77;
-			8'h4E   : reg_data_out <= slv_reg78;
-			8'h4F   : reg_data_out <= slv_reg79;
-			8'h50   : reg_data_out <= slv_reg80;
-			8'h51   : reg_data_out <= slv_reg81;
-			8'h52   : reg_data_out <= slv_reg82;
-			8'h53   : reg_data_out <= slv_reg83;
-			8'h54   : reg_data_out <= slv_reg84;
-			8'h55   : reg_data_out <= slv_reg85;
-			8'h56   : reg_data_out <= slv_reg86;
-			8'h57   : reg_data_out <= slv_reg87;
-			8'h58   : reg_data_out <= slv_reg88;
-			8'h59   : reg_data_out <= slv_reg89;
-			8'h5A   : reg_data_out <= slv_reg90;
-			8'h5B   : reg_data_out <= slv_reg91;
-			8'h5C   : reg_data_out <= slv_reg92;
-			8'h5D   : reg_data_out <= slv_reg93;
-			8'h5E   : reg_data_out <= slv_reg94;
-			8'h5F   : reg_data_out <= slv_reg95;
-			8'h60   : reg_data_out <= slv_reg96;
-			8'h61   : reg_data_out <= slv_reg97;
-			8'h62   : reg_data_out <= slv_reg98;
-			8'h63   : reg_data_out <= slv_reg99;
-			8'h64   : reg_data_out <= slv_reg100;
-			8'h65   : reg_data_out <= slv_reg101;
-			8'h66   : reg_data_out <= slv_reg102;
-			8'h67   : reg_data_out <= slv_reg103;
-			8'h68   : reg_data_out <= slv_reg104;
-			8'h69   : reg_data_out <= slv_reg105;
-			8'h6A   : reg_data_out <= slv_reg106;
-			8'h6B   : reg_data_out <= slv_reg107;
-			8'h6C   : reg_data_out <= slv_reg108;
-			8'h6D   : reg_data_out <= slv_reg109;
-			8'h6E   : reg_data_out <= slv_reg110;
-			8'h6F   : reg_data_out <= slv_reg111;
-			8'h70   : reg_data_out <= slv_reg112;
-			8'h71   : reg_data_out <= slv_reg113;
-			8'h72   : reg_data_out <= slv_reg114;
-			8'h73   : reg_data_out <= slv_reg115;
-			8'h74   : reg_data_out <= slv_reg116;
-			8'h75   : reg_data_out <= slv_reg117;
-			8'h76   : reg_data_out <= slv_reg118;
-			8'h77   : reg_data_out <= slv_reg119;
-			8'h78   : reg_data_out <= slv_reg120;
-			8'h79   : reg_data_out <= slv_reg121;
-			8'h7A   : reg_data_out <= slv_reg122;
-			8'h7B   : reg_data_out <= slv_reg123;
-			8'h7C   : reg_data_out <= slv_reg124;
-			8'h7D   : reg_data_out <= slv_reg125;
-			8'h7E   : reg_data_out <= slv_reg126;
-			8'h7F   : reg_data_out <= slv_reg127;
-			8'h80   : reg_data_out <= slv_reg128;
-			8'h81   : reg_data_out <= slv_reg129;
-			8'h82   : reg_data_out <= slv_reg130;
-			8'h83   : reg_data_out <= slv_reg131;
-			8'h84   : reg_data_out <= slv_reg132;
-			8'h85   : reg_data_out <= slv_reg133;
-			8'h86   : reg_data_out <= slv_reg134;
-			8'h87   : reg_data_out <= slv_reg135;
-			8'h88   : reg_data_out <= slv_reg136;
-			8'h89   : reg_data_out <= slv_reg137;
-			8'h8A   : reg_data_out <= slv_reg138;
-			8'h8B   : reg_data_out <= slv_reg139;
-			8'h8C   : reg_data_out <= slv_reg140;
-			8'h8D   : reg_data_out <= slv_reg141;
-			8'h8E   : reg_data_out <= slv_reg142;
-			8'h8F   : reg_data_out <= slv_reg143;
-			8'h90   : reg_data_out <= slv_reg144;
-			8'h91   : reg_data_out <= slv_reg145;
-			8'h92   : reg_data_out <= slv_reg146;
-			8'h93   : reg_data_out <= slv_reg147;
-			8'h94   : reg_data_out <= slv_reg148;
-			8'h95   : reg_data_out <= slv_reg149;
-			8'h96   : reg_data_out <= slv_reg150;
-			8'h97   : reg_data_out <= slv_reg151;
-			8'h98   : reg_data_out <= slv_reg152;
-			8'h99   : reg_data_out <= slv_reg153;
-			8'h9A   : reg_data_out <= slv_reg154;
-			8'h9B   : reg_data_out <= slv_reg155;
-			8'h9C   : reg_data_out <= slv_reg156;
-			8'h9D   : reg_data_out <= slv_reg157;
-			8'h9E   : reg_data_out <= slv_reg158;
-			8'h9F   : reg_data_out <= slv_reg159;
-			8'hA0   : reg_data_out <= slv_reg160;
-			8'hA1   : reg_data_out <= slv_reg161;
-			8'hA2   : reg_data_out <= slv_reg162;
-			8'hA3   : reg_data_out <= slv_reg163;
-			8'hA4   : reg_data_out <= slv_reg164;
-			8'hA5   : reg_data_out <= slv_reg165;
-			8'hA6   : reg_data_out <= slv_reg166;
-			8'hA7   : reg_data_out <= slv_reg167;
-			8'hA8   : reg_data_out <= slv_reg168;
-			8'hA9   : reg_data_out <= slv_reg169;
-			8'hAA   : reg_data_out <= slv_reg170;
-			8'hAB   : reg_data_out <= slv_reg171;
-			8'hAC   : reg_data_out <= slv_reg172;
-			8'hAD   : reg_data_out <= slv_reg173;
-			8'hAE   : reg_data_out <= slv_reg174;
-			8'hAF   : reg_data_out <= slv_reg175;
-			8'hB0   : reg_data_out <= slv_reg176;
-			8'hB1   : reg_data_out <= slv_reg177;
-			8'hB2   : reg_data_out <= slv_reg178;
-			8'hB3   : reg_data_out <= slv_reg179;
-			8'hB4   : reg_data_out <= slv_reg180;
-			8'hB5   : reg_data_out <= slv_reg181;
-			8'hB6   : reg_data_out <= slv_reg182;
-			8'hB7   : reg_data_out <= slv_reg183;
-			8'hB8   : reg_data_out <= slv_reg184;
-			8'hB9   : reg_data_out <= slv_reg185;
-			8'hBA   : reg_data_out <= slv_reg186;
-			8'hBB   : reg_data_out <= slv_reg187;
-			8'hBC   : reg_data_out <= slv_reg188;
-			8'hBD   : reg_data_out <= slv_reg189;
-			8'hBE   : reg_data_out <= slv_reg190;
-			8'hBF   : reg_data_out <= slv_reg191;
-			8'hC0   : reg_data_out <= slv_reg192;
-			8'hC1   : reg_data_out <= slv_reg193;
-			8'hC2   : reg_data_out <= slv_reg194;
-			8'hC3   : reg_data_out <= slv_reg195;
-			8'hC4   : reg_data_out <= slv_reg196;
-			8'hC5   : reg_data_out <= slv_reg197;
-			8'hC6   : reg_data_out <= slv_reg198;
-			8'hC7   : reg_data_out <= slv_reg199;
-			8'hC8   : reg_data_out <= slv_reg200;
-			8'hC9   : reg_data_out <= slv_reg201;
-			8'hCA   : reg_data_out <= slv_reg202;
-			8'hCB   : reg_data_out <= slv_reg203;
-			8'hCC   : reg_data_out <= slv_reg204;
-			8'hCD   : reg_data_out <= slv_reg205;
-			8'hCE   : reg_data_out <= slv_reg206;
-			8'hCF   : reg_data_out <= slv_reg207;
-			8'hD0   : reg_data_out <= slv_reg208;
-			8'hD1   : reg_data_out <= slv_reg209;
-			8'hD2   : reg_data_out <= slv_reg210;
-			8'hD3   : reg_data_out <= slv_reg211;
-			8'hD4   : reg_data_out <= slv_reg212;
-			8'hD5   : reg_data_out <= slv_reg213;
-			8'hD6   : reg_data_out <= slv_reg214;
-			8'hD7   : reg_data_out <= slv_reg215;
-			8'hD8   : reg_data_out <= slv_reg216;
-			8'hD9   : reg_data_out <= slv_reg217;
-			8'hDA   : reg_data_out <= slv_reg218;
-			8'hDB   : reg_data_out <= slv_reg219;
-			8'hDC   : reg_data_out <= slv_reg220;
-			8'hDD   : reg_data_out <= slv_reg221;
-			8'hDE   : reg_data_out <= slv_reg222;
-			8'hDF   : reg_data_out <= slv_reg223;
-			8'hE0   : reg_data_out <= slv_reg224;
-			8'hE1   : reg_data_out <= slv_reg225;
-			8'hE2   : reg_data_out <= slv_reg226;
-			8'hE3   : reg_data_out <= slv_reg227;
-			8'hE4   : reg_data_out <= slv_reg228;
-			8'hE5   : reg_data_out <= slv_reg229;
-			8'hE6   : reg_data_out <= slv_reg230;
-			8'hE7   : reg_data_out <= slv_reg231;
-			8'hE8   : reg_data_out <= slv_reg232;
-			8'hE9   : reg_data_out <= slv_reg233;
-			8'hEA   : reg_data_out <= slv_reg234;
-			8'hEB   : reg_data_out <= slv_reg235;
-			8'hEC   : reg_data_out <= slv_reg236;
-			8'hED   : reg_data_out <= slv_reg237;
-			8'hEE   : reg_data_out <= slv_reg238;
-			8'hEF   : reg_data_out <= slv_reg239;
-			8'hF0   : reg_data_out <= slv_reg240;
-			8'hF1   : reg_data_out <= slv_reg241;
-			8'hF2   : reg_data_out <= slv_reg242;
-			8'hF3   : reg_data_out <= slv_reg243;
-			8'hF4   : reg_data_out <= slv_reg244;
-			8'hF5   : reg_data_out <= slv_reg245;
-			8'hF6   : reg_data_out <= slv_reg246;
-			8'hF7   : reg_data_out <= slv_reg247;
-			8'hF8   : reg_data_out <= slv_reg248;
-			8'hF9   : reg_data_out <= slv_reg249;
-			8'hFA   : reg_data_out <= slv_reg250;
-			8'hFB   : reg_data_out <= slv_reg251;
-			8'hFC   : reg_data_out <= slv_reg252;
-			8'hFD   : reg_data_out <= slv_reg253;
-			8'hFE   : reg_data_out <= slv_reg254;
-			8'hFF   : reg_data_out <= slv_reg255;
-			default : reg_data_out <= 0;
-		  endcase
+			// 8'h0C   : reg_data_out <= slv_reg12;
+			// 8'h0D   : reg_data_out <= slv_reg13;
+			// 8'h0E   : reg_data_out <= slv_reg14;
+			// 8'h0F   : reg_data_out <= slv_reg15;
+			// 8'h10   : reg_data_out <= slv_reg16;
+			// 8'h11   : reg_data_out <= slv_reg17;
+			// 8'h12   : reg_data_out <= slv_reg18;
+			// 8'h13   : reg_data_out <= slv_reg19;
+			// 8'h14   : reg_data_out <= slv_reg20;
+			// 8'h15   : reg_data_out <= slv_reg21;
+			// 8'h16   : reg_data_out <= slv_reg22;
+			// 8'h17   : reg_data_out <= slv_reg23;
+			// 8'h18   : reg_data_out <= slv_reg24;
+			// 8'h19   : reg_data_out <= slv_reg25;
+			// 8'h1A   : reg_data_out <= slv_reg26;
+			// 8'h1B   : reg_data_out <= slv_reg27;
+			// 8'h1C   : reg_data_out <= slv_reg28;
+			// 8'h1D   : reg_data_out <= slv_reg29;
+			// 8'h1E   : reg_data_out <= slv_reg30;
+			// 8'h1F   : reg_data_out <= slv_reg31;
+			// 8'h20   : reg_data_out <= slv_reg32;
+			// 8'h21   : reg_data_out <= slv_reg33;
+			// 8'h22   : reg_data_out <= slv_reg34;
+			// 8'h23   : reg_data_out <= slv_reg35;
+			// 8'h24   : reg_data_out <= slv_reg36;
+			// 8'h25   : reg_data_out <= slv_reg37;
+			// 8'h26   : reg_data_out <= slv_reg38;
+			// 8'h27   : reg_data_out <= slv_reg39;
+			// 8'h28   : reg_data_out <= slv_reg40;
+			// 8'h29   : reg_data_out <= slv_reg41;
+			// 8'h2A   : reg_data_out <= slv_reg42;
+			// 8'h2B   : reg_data_out <= slv_reg43;
+			// 8'h2C   : reg_data_out <= slv_reg44;
+			// 8'h2D   : reg_data_out <= slv_reg45;
+			// 8'h2E   : reg_data_out <= slv_reg46;
+			// 8'h2F   : reg_data_out <= slv_reg47;
+			// 8'h30   : reg_data_out <= slv_reg48;
+			// 8'h31   : reg_data_out <= slv_reg49;
+			// 8'h32   : reg_data_out <= slv_reg50;
+			// 8'h33   : reg_data_out <= slv_reg51;
+			// 8'h34   : reg_data_out <= slv_reg52;
+			// 8'h35   : reg_data_out <= slv_reg53;
+			// 8'h36   : reg_data_out <= slv_reg54;
+			// 8'h37   : reg_data_out <= slv_reg55;
+			// 8'h38   : reg_data_out <= slv_reg56;
+			// 8'h39   : reg_data_out <= slv_reg57;
+			// 8'h3A   : reg_data_out <= slv_reg58;
+			// 8'h3B   : reg_data_out <= slv_reg59;
+			// 8'h3C   : reg_data_out <= slv_reg60;
+			// 8'h3D   : reg_data_out <= slv_reg61;
+			// 8'h3E   : reg_data_out <= slv_reg62;
+			// 8'h3F   : reg_data_out <= slv_reg63;
+			// 8'h40   : reg_data_out <= slv_reg64;
+			// 8'h41   : reg_data_out <= slv_reg65;
+			// 8'h42   : reg_data_out <= slv_reg66;
+			// 8'h43   : reg_data_out <= slv_reg67;
+			// 8'h44   : reg_data_out <= slv_reg68;
+			// 8'h45   : reg_data_out <= slv_reg69;
+			// 8'h46   : reg_data_out <= slv_reg70;
+			// 8'h47   : reg_data_out <= slv_reg71;
+			// 8'h48   : reg_data_out <= slv_reg72;
+			// 8'h49   : reg_data_out <= slv_reg73;
+			// 8'h4A   : reg_data_out <= slv_reg74;
+			// 8'h4B   : reg_data_out <= slv_reg75;
+			// 8'h4C   : reg_data_out <= slv_reg76;
+			// 8'h4D   : reg_data_out <= slv_reg77;
+			// 8'h4E   : reg_data_out <= slv_reg78;
+			// 8'h4F   : reg_data_out <= slv_reg79;
+			// 8'h50   : reg_data_out <= slv_reg80;
+			// 8'h51   : reg_data_out <= slv_reg81;
+			// 8'h52   : reg_data_out <= slv_reg82;
+			// 8'h53   : reg_data_out <= slv_reg83;
+			// 8'h54   : reg_data_out <= slv_reg84;
+			// 8'h55   : reg_data_out <= slv_reg85;
+			// 8'h56   : reg_data_out <= slv_reg86;
+			// 8'h57   : reg_data_out <= slv_reg87;
+			// 8'h58   : reg_data_out <= slv_reg88;
+			// 8'h59   : reg_data_out <= slv_reg89;
+			// 8'h5A   : reg_data_out <= slv_reg90;
+			// 8'h5B   : reg_data_out <= slv_reg91;
+			// 8'h5C   : reg_data_out <= slv_reg92;
+			// 8'h5D   : reg_data_out <= slv_reg93;
+			// 8'h5E   : reg_data_out <= slv_reg94;
+			// 8'h5F   : reg_data_out <= slv_reg95;
+			// 8'h60   : reg_data_out <= slv_reg96;
+			// 8'h61   : reg_data_out <= slv_reg97;
+			// 8'h62   : reg_data_out <= slv_reg98;
+			// 8'h63   : reg_data_out <= slv_reg99;
+			// 8'h64   : reg_data_out <= slv_reg100;
+			// 8'h65   : reg_data_out <= slv_reg101;
+			// 8'h66   : reg_data_out <= slv_reg102;
+			// 8'h67   : reg_data_out <= slv_reg103;
+			// 8'h68   : reg_data_out <= slv_reg104;
+			// 8'h69   : reg_data_out <= slv_reg105;
+			// 8'h6A   : reg_data_out <= slv_reg106;
+			// 8'h6B   : reg_data_out <= slv_reg107;
+			// 8'h6C   : reg_data_out <= slv_reg108;
+			// 8'h6D   : reg_data_out <= slv_reg109;
+			// 8'h6E   : reg_data_out <= slv_reg110;
+			// 8'h6F   : reg_data_out <= slv_reg111;
+			// 8'h70   : reg_data_out <= slv_reg112;
+			// 8'h71   : reg_data_out <= slv_reg113;
+			// 8'h72   : reg_data_out <= slv_reg114;
+			// 8'h73   : reg_data_out <= slv_reg115;
+			// 8'h74   : reg_data_out <= slv_reg116;
+			// 8'h75   : reg_data_out <= slv_reg117;
+			// 8'h76   : reg_data_out <= slv_reg118;
+			// 8'h77   : reg_data_out <= slv_reg119;
+			// 8'h78   : reg_data_out <= slv_reg120;
+			// 8'h79   : reg_data_out <= slv_reg121;
+			// 8'h7A   : reg_data_out <= slv_reg122;
+			// 8'h7B   : reg_data_out <= slv_reg123;
+			// 8'h7C   : reg_data_out <= slv_reg124;
+			// 8'h7D   : reg_data_out <= slv_reg125;
+			// 8'h7E   : reg_data_out <= slv_reg126;
+			// 8'h7F   : reg_data_out <= slv_reg127;
+			// 8'h80   : reg_data_out <= slv_reg128;
+			// 8'h81   : reg_data_out <= slv_reg129;
+			// 8'h82   : reg_data_out <= slv_reg130;
+			// 8'h83   : reg_data_out <= slv_reg131;
+			// 8'h84   : reg_data_out <= slv_reg132;
+			// 8'h85   : reg_data_out <= slv_reg133;
+			// 8'h86   : reg_data_out <= slv_reg134;
+			// 8'h87   : reg_data_out <= slv_reg135;
+			// 8'h88   : reg_data_out <= slv_reg136;
+			// 8'h89   : reg_data_out <= slv_reg137;
+			// 8'h8A   : reg_data_out <= slv_reg138;
+			// 8'h8B   : reg_data_out <= slv_reg139;
+			// 8'h8C   : reg_data_out <= slv_reg140;
+			// 8'h8D   : reg_data_out <= slv_reg141;
+			// 8'h8E   : reg_data_out <= slv_reg142;
+			// 8'h8F   : reg_data_out <= slv_reg143;
+			// 8'h90   : reg_data_out <= slv_reg144;
+			// 8'h91   : reg_data_out <= slv_reg145;
+			// 8'h92   : reg_data_out <= slv_reg146;
+			// 8'h93   : reg_data_out <= slv_reg147;
+			// 8'h94   : reg_data_out <= slv_reg148;
+			// 8'h95   : reg_data_out <= slv_reg149;
+			// 8'h96   : reg_data_out <= slv_reg150;
+			// 8'h97   : reg_data_out <= slv_reg151;
+			// 8'h98   : reg_data_out <= slv_reg152;
+			// 8'h99   : reg_data_out <= slv_reg153;
+			// 8'h9A   : reg_data_out <= slv_reg154;
+			// 8'h9B   : reg_data_out <= slv_reg155;
+			// 8'h9C   : reg_data_out <= slv_reg156;
+			// 8'h9D   : reg_data_out <= slv_reg157;
+			// 8'h9E   : reg_data_out <= slv_reg158;
+			// 8'h9F   : reg_data_out <= slv_reg159;
+			// 8'hA0   : reg_data_out <= slv_reg160;
+			// 8'hA1   : reg_data_out <= slv_reg161;
+			// 8'hA2   : reg_data_out <= slv_reg162;
+			// 8'hA3   : reg_data_out <= slv_reg163;
+			// 8'hA4   : reg_data_out <= slv_reg164;
+			// 8'hA5   : reg_data_out <= slv_reg165;
+			// 8'hA6   : reg_data_out <= slv_reg166;
+			// 8'hA7   : reg_data_out <= slv_reg167;
+			// 8'hA8   : reg_data_out <= slv_reg168;
+			// 8'hA9   : reg_data_out <= slv_reg169;
+			// 8'hAA   : reg_data_out <= slv_reg170;
+			// 8'hAB   : reg_data_out <= slv_reg171;
+			// 8'hAC   : reg_data_out <= slv_reg172;
+			// 8'hAD   : reg_data_out <= slv_reg173;
+			// 8'hAE   : reg_data_out <= slv_reg174;
+			// 8'hAF   : reg_data_out <= slv_reg175;
+			// 8'hB0   : reg_data_out <= slv_reg176;
+			// 8'hB1   : reg_data_out <= slv_reg177;
+			// 8'hB2   : reg_data_out <= slv_reg178;
+			// 8'hB3   : reg_data_out <= slv_reg179;
+			// 8'hB4   : reg_data_out <= slv_reg180;
+			// 8'hB5   : reg_data_out <= slv_reg181;
+			// 8'hB6   : reg_data_out <= slv_reg182;
+			// 8'hB7   : reg_data_out <= slv_reg183;
+			// 8'hB8   : reg_data_out <= slv_reg184;
+			// 8'hB9   : reg_data_out <= slv_reg185;
+			// 8'hBA   : reg_data_out <= slv_reg186;
+			// 8'hBB   : reg_data_out <= slv_reg187;
+			// 8'hBC   : reg_data_out <= slv_reg188;
+			// 8'hBD   : reg_data_out <= slv_reg189;
+			// 8'hBE   : reg_data_out <= slv_reg190;
+			// 8'hBF   : reg_data_out <= slv_reg191;
+			// 8'hC0   : reg_data_out <= slv_reg192;
+			// 8'hC1   : reg_data_out <= slv_reg193;
+			// 8'hC2   : reg_data_out <= slv_reg194;
+			// 8'hC3   : reg_data_out <= slv_reg195;
+			// 8'hC4   : reg_data_out <= slv_reg196;
+			// 8'hC5   : reg_data_out <= slv_reg197;
+			// 8'hC6   : reg_data_out <= slv_reg198;
+			// 8'hC7   : reg_data_out <= slv_reg199;
+			// 8'hC8   : reg_data_out <= slv_reg200;
+			// 8'hC9   : reg_data_out <= slv_reg201;
+			// 8'hCA   : reg_data_out <= slv_reg202;
+			// 8'hCB   : reg_data_out <= slv_reg203;
+			// 8'hCC   : reg_data_out <= slv_reg204;
+			// 8'hCD   : reg_data_out <= slv_reg205;
+			// 8'hCE   : reg_data_out <= slv_reg206;
+			// 8'hCF   : reg_data_out <= slv_reg207;
+			// 8'hD0   : reg_data_out <= slv_reg208;
+			// 8'hD1   : reg_data_out <= slv_reg209;
+			// 8'hD2   : reg_data_out <= slv_reg210;
+			// 8'hD3   : reg_data_out <= slv_reg211;
+			// 8'hD4   : reg_data_out <= slv_reg212;
+			// 8'hD5   : reg_data_out <= slv_reg213;
+			// 8'hD6   : reg_data_out <= slv_reg214;
+			// 8'hD7   : reg_data_out <= slv_reg215;
+			// 8'hD8   : reg_data_out <= slv_reg216;
+			// 8'hD9   : reg_data_out <= slv_reg217;
+			// 8'hDA   : reg_data_out <= slv_reg218;
+			// 8'hDB   : reg_data_out <= slv_reg219;
+			// 8'hDC   : reg_data_out <= slv_reg220;
+			// 8'hDD   : reg_data_out <= slv_reg221;
+			// 8'hDE   : reg_data_out <= slv_reg222;
+			// 8'hDF   : reg_data_out <= slv_reg223;
+			// 8'hE0   : reg_data_out <= slv_reg224;
+			// 8'hE1   : reg_data_out <= slv_reg225;
+			// 8'hE2   : reg_data_out <= slv_reg226;
+			// 8'hE3   : reg_data_out <= slv_reg227;
+			// 8'hE4   : reg_data_out <= slv_reg228;
+			// 8'hE5   : reg_data_out <= slv_reg229;
+			// 8'hE6   : reg_data_out <= slv_reg230;
+			// 8'hE7   : reg_data_out <= slv_reg231;
+			// 8'hE8   : reg_data_out <= slv_reg232;
+			// 8'hE9   : reg_data_out <= slv_reg233;
+			// 8'hEA   : reg_data_out <= slv_reg234;
+			// 8'hEB   : reg_data_out <= slv_reg235;
+			// 8'hEC   : reg_data_out <= slv_reg236;
+			// 8'hED   : reg_data_out <= slv_reg237;
+			// 8'hEE   : reg_data_out <= slv_reg238;
+			// 8'hEF   : reg_data_out <= slv_reg239;
+			// 8'hF0   : reg_data_out <= slv_reg240;
+			// 8'hF1   : reg_data_out <= slv_reg241;
+			// 8'hF2   : reg_data_out <= slv_reg242;
+			// 8'hF3   : reg_data_out <= slv_reg243;
+			// 8'hF4   : reg_data_out <= slv_reg244;
+			// 8'hF5   : reg_data_out <= slv_reg245;
+			// 8'hF6   : reg_data_out <= slv_reg246;
+			// 8'hF7   : reg_data_out <= slv_reg247;
+			// 8'hF8   : reg_data_out <= slv_reg248;
+			// 8'hF9   : reg_data_out <= slv_reg249;
+			// 8'hFA   : reg_data_out <= slv_reg250;
+			// 8'hFB   : reg_data_out <= slv_reg251;
+			// 8'hFC   : reg_data_out <= slv_reg252;
+			// 8'hFD   : reg_data_out <= slv_reg253;
+			// 8'hFE   : reg_data_out <= slv_reg254;
+			// 8'hFF   : reg_data_out <= slv_reg255;
+			// default : reg_data_out <= 0;
+		  // endcase
 	end
 
 	// Output register or memory read data
@@ -3200,8 +3204,12 @@
 
 	// Add user logic here
 
+	assign clear = slv_reg255[0];
 
-
+generate
+	genvar i;
+	assign edgeState_Wire[i] = edgeState[32*i+31:32*i];
+endgenerate
 
 	// User logic ends
 
