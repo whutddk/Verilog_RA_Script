@@ -525,14 +525,19 @@ generate
 
 for ( i = 0; i < 256; i = i + 1 ) begin
 	always @( posedge S_AXI_ACLK ) begin 
-		if ( S_AXI_ARESETN == 1'b0 || clear == 1'b1 ) begin
+		if ( S_AXI_ARESETN == 1'b0  ) begin
 			
-				oneGrid_Reg[i] <= 32'b0;
 	
 		end
 
 		else begin
-			oneGrid_Reg[ mem_address ] <= S_AXI_WDATA;
+			oneGrid_Reg[ mem_address ] <=  (
+			                                 {32{clear}} & S_AXI_WDATA 
+			                                )
+			                                | 
+			                                (
+			                                 {32{~clear}} & ( oneGrid_Reg[ mem_address ] | S_AXI_WDATA )
+			                                 );
 		end
 	end
 end
