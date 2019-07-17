@@ -3,7 +3,7 @@
 // Engineer: 29505
 // Create Date: 2019-07-14 19:06:08
 // Last Modified by:   29505
-// Last Modified time: 2019-07-17 22:42:58
+// Last Modified time: 2019-07-17 22:53:32
 // Email: 295054118@whut.edu.cn
 // page:  
 // Design Name: PRM_RA_axi4full_slave.v  
@@ -76,7 +76,7 @@ module PRM_RA_axi4full_slave #
 		// Width of ID for for write address, write data, read address and read data
 		parameter integer C_S_AXI_ID_WIDTH	= 1,
 		// Width of S_AXI data bus
-		parameter integer C_S_AXI_DATA_WIDTH	= 1024,
+		parameter integer C_S_AXI_DATA_WIDTH	= 32,
 		// Width of S_AXI address bus
 		parameter integer C_S_AXI_ADDR_WIDTH	= 32
 	)
