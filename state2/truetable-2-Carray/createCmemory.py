@@ -4,7 +4,7 @@
 # @Author: Ruige_Lee
 # @Date:   2019-07-13 11:05:55
 # @Last Modified by:   Ruige_Lee
-# @Last Modified time: 2019-07-13 17:08:30
+# @Last Modified time: 2019-07-21 13:58:34
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 import sys
@@ -86,7 +86,7 @@ def write_Cfile():
 		strSyntax = strSyntax + '********************************************/\n\n'
 
 
-		strSyntax = strSyntax + 'uint32_t lookUpTrueTable[16384]['+str(wordNum)+'] = {\n'
+		strSyntax = strSyntax + '__attribute__ ((section("dataBf1"))) volatile uint32_t lookUpTrueTable[16384]['+str(wordNum)+'] = {\n'
 		CFile.write(strSyntax)
 		
 		for grid in range(0,gridNum):	#all case all grid  16384

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # @File Name: disRegGenerate.py
-# @File Path: K:\work\MAS2\PRM_robotic_arm\Verilog_RA_Script\state2\distrubuteRegAssist\disRegGenerate.py
+# @File Path: M:\MAS2\PRM_Robotic_Arm\Verilog_RA_Script\state2\distrubuteRegAssist\disRegGenerate.py
 # @Author: Ruige_Lee
 # @Date:   2019-07-07 15:44:34
-# @Last Modified by:   29505
-# @Last Modified time: 2019-07-17 22:42:07
+# @Last Modified by:   Ruige_Lee
+# @Last Modified time: 2019-07-21 21:15:28
 # @Email: 295054118@whut.edu.cn
 # @page: https://whutddk.github.io/
 # -*- coding: utf-8 -*-
@@ -70,7 +70,7 @@ def write_verilog():
 		strSyntax = strSyntax + '\n\nassign {'
 		for i in range (0,regNum-1):
 			strSyntax = strSyntax +'edgeWire_'+ str(255-i) +', '
-		strSyntax = strSyntax + 'edgeReg_'+ str(0) +'} = edgeWire;\n\n\n '
+		strSyntax = strSyntax + 'edgeWire_'+ str(0) +'} = edgeWire;\n\n\n '
 
 		for i in range (0,regNum):
 			strSyntax = strSyntax + 'wire [31:0] edgeWire_'+ str(i) + ';\n'
